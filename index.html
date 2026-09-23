@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -22,6 +22,12 @@
     </style>
 </head>
 <body class="bg-gray-950 text-gray-100 min-h-screen flex flex-col justify-between selection:bg-yellow-500 selection:text-black">
+
+    <!-- ANNOUNCEMENT BANNER -->
+    <div class="bg-gradient-to-r from-yellow-600 via-amber-500 to-yellow-600 text-black font-extrabold text-xs py-2 px-4 text-center tracking-wide">
+        🚀 PIONEER OFFER: Get full 30-day execution checklists & future blueprints for standard $27 locked rate! 
+        <a href="https://divitiarum.gumroad.com/l/vault" target="_blank" rel="noopener noreferrer" class="underline hover:text-white ml-1.5 font-black">Get Pioneer Access &rarr;</a>
+    </div>
 
     <!-- NAVIGATION HEADER -->
     <header class="sticky top-0 z-40 border-b border-gray-800 bg-gray-950/80 backdrop-blur-md">
@@ -68,7 +74,7 @@
             <div class="text-center max-w-3xl mx-auto pt-4 pb-2">
                 <span class="text-xs font-bold uppercase tracking-widest text-yellow-400 px-3 py-1 rounded-full bg-yellow-400/10 border border-yellow-400/20">Billionaire Blueprint Engine</span>
                 <h2 class="text-3xl sm:text-5xl font-black text-white mt-4 tracking-tight">Turn High-Yield Business Ideas Into Cash Flow</h2>
-                <p class="text-gray-400 mt-3 text-base sm:text-lg">Filter through 20+ verified business blueprints complete with SWOT, 30-day execution roadmaps, and revenue potential.</p>
+                <p class="text-gray-400 mt-3 text-base sm:text-lg">Filter through verified business blueprints complete with SWOT, 30-day execution roadmaps, and revenue potential.</p>
             </div>
 
             <!-- Search & Filter Controls -->
@@ -107,7 +113,7 @@
             <div class="text-center space-y-2">
                 <i data-lucide="sparkles" class="w-10 h-10 text-yellow-400 mx-auto"></i>
                 <h2 class="text-2xl font-bold text-white">Smart Match Finder</h2>
-                <p class="text-gray-400 text-sm">Answer 4 quick questions to compute your top 3 matching business blueprints.</p>
+                <p class="text-gray-400 text-sm">Answer 3 quick questions to compute your top matching business blueprints.</p>
             </div>
 
             <div class="space-y-6 pt-4">
@@ -138,9 +144,15 @@
                 <button onclick="runQuiz()" class="w-full gold-btn py-3.5 rounded-xl font-bold text-sm tracking-wide uppercase shadow-lg">Calculate My Matches</button>
             </div>
 
-            <div id="quiz-results" class="hidden space-y-4 pt-6 border-t border-gray-800">
+            <div id="quiz-results" class="hidden space-y-6 pt-6 border-t border-gray-800">
                 <h3 class="text-lg font-bold text-yellow-400">Your Top Recommended Models</h3>
                 <div id="quiz-matches-list" class="space-y-3"></div>
+
+                <div class="bg-gradient-to-r from-yellow-500/10 to-amber-500/10 p-5 rounded-2xl border border-yellow-500/30 text-center space-y-3">
+                    <p class="font-bold text-white text-sm">Want the complete 30-Day Execution PDF Checklists sent directly to you?</p>
+                    <p class="text-xs text-gray-400">Lock in your Pioneer Pass for just $27 today and get all current and future blueprint checklists for life.</p>
+                    <a href="https://divitiarum.gumroad.com/l/vault" target="_blank" rel="noopener noreferrer" class="gold-btn inline-block px-6 py-2.5 rounded-xl text-xs uppercase font-extrabold shadow-md hover:scale-105 transition">Get $27 Pioneer Pass</a>
+                </div>
             </div>
         </section>
 
@@ -277,12 +289,26 @@
 
                 <div>
                     <h4 class="font-bold text-white text-base mb-2 flex items-center gap-2"><i data-lucide="check-square" class="w-4 h-4 text-yellow-400"></i> 30-Day Launch Roadmap</h4>
-                    <ul id="modal-roadmap" class="space-y-2 text-gray-300"></ul>
+                    <ul id="modal-roadmap" class="space-y-2 text-gray-300 mb-4"></ul>
+
+                    <div class="bg-yellow-500/10 border border-yellow-500/30 p-4 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-3">
+                        <div>
+                            <span class="text-xs font-bold text-yellow-400 uppercase tracking-wide">Pioneer Access ($27)</span>
+                            <p class="text-xs text-gray-300">Get the full printable 30-Day Checklist PDF + lifetime access to all upcoming products.</p>
+                        </div>
+                        <a href="https://divitiarum.gumroad.com/l/vault" target="_blank" rel="noopener noreferrer" class="gold-btn px-4 py-2 rounded-lg text-xs uppercase font-extrabold whitespace-nowrap">Buy Vault ($27)</a>
+                    </div>
                 </div>
             </div>
 
-            <div class="p-4 border-t border-gray-800 bg-gray-950 flex justify-end gap-3">
-                <button id="modal-bookmark-btn" class="gold-btn px-6 py-2.5 rounded-xl font-bold text-xs uppercase">Bookmark Blueprint</button>
+            <div class="p-4 border-t border-gray-800 bg-gray-950 flex justify-between items-center">
+                <span class="text-xs text-gray-500 font-semibold">🔒 Early Pioneer Price: $27</span>
+                <div class="flex gap-2">
+                    <button id="modal-bookmark-btn" class="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-xl font-bold text-xs uppercase">Bookmark</button>
+                    <a href="https://divitiarum.gumroad.com/l/vault" target="_blank" rel="noopener noreferrer" class="gold-btn px-5 py-2 rounded-xl font-bold text-xs uppercase flex items-center gap-1">
+                        Unlock PDF Checklists
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -292,7 +318,7 @@
         <p>&copy; 2026 Divitiae Hub powered by IdeaSparks. Built for ambitious founders.</p>
     </footer>
 
-    <!-- APP SCRIPT & DATA -->
+    <!-- APP SCRIPT & COMPLETE DATA -->
     <script>
         const blueprints = [
             {
@@ -361,6 +387,108 @@
                     'Days 8-15: Script first 4 long-form video scripts using Claude/ChatGPT.',
                     'Days 16-22: Edit videos using CapCut Desktop & stock libraries.',
                     'Days 23-30: Upload consistently twice a week with high-CTR thumbnails.'
+                ]
+            },
+            {
+                id: 'print-on-demand',
+                title: 'Niche Community Apparel Brand',
+                category: 'E-Commerce & Products',
+                budgetCategory: 'low',
+                capital: '$100 - $250',
+                difficulty: 'Beginner',
+                summary: 'Launch print-on-demand graphic tees and hoodies targeting hyper-specific subcultures without inventory cost.',
+                swotS: 'Zero inventory risk; print-on-demand suppliers handle fulfillment automatically.',
+                swotW: 'Lower profit margins (20-30%) compared to digital products.',
+                roadmap: [
+                    'Days 1-7: Identify passionate passionate niche communities (e.g. Pickleball, Devs, Nurses).',
+                    'Days 8-15: Design 10 typography graphics using Canva & Midjourney.',
+                    'Days 16-22: Set up Shopify store integrated with Printify.',
+                    'Days 23-30: Test $5/day meta ads and run organic TikTok unboxings.'
+                ]
+            },
+            {
+                id: 'ai-seo-agency',
+                title: 'Programmatic SEO & Content Studio',
+                category: 'AI & Digital Services',
+                budgetCategory: 'medium',
+                capital: '$400 - $900',
+                difficulty: 'Intermediate',
+                summary: 'Publish hundreds of targeted blog articles for niche businesses using automated SEO pipelines and custom AI editing.',
+                swotS: 'Massive organic traffic upside for client websites.',
+                swotW: 'Requires foundational understanding of keyword research and SEO principles.',
+                roadmap: [
+                    'Days 1-7: Set up keyword research stack (Ahrefs / LowFruits).',
+                    'Days 8-15: Create automated publishing workflows using Claude and WordPress REST API.',
+                    'Days 16-22: Reach out to 20 local service businesses offering organic audit reports.',
+                    'Days 23-30: Onboard 1-2 clients for ongoing SEO management.'
+                ]
+            },
+            {
+                id: 'paid-newsletter',
+                title: 'Curated Niche Industry Newsletter',
+                category: 'Content & Creator Economy',
+                budgetCategory: 'low',
+                capital: '$50 - $200',
+                difficulty: 'Beginner',
+                summary: 'Curate weekly news, trends, and opportunities in growing fields like AI tools, fintech, or climate tech on Beehiiv.',
+                swotS: 'High subscriber lifetime value through sponsorships and premium subscriptions.',
+                swotW: 'Requires steady publishing discipline to build audience trust.',
+                roadmap: [
+                    'Days 1-7: Select specific focus area and create landing page on Beehiiv.',
+                    'Days 8-15: Publish initial 3 issue archives.',
+                    'Days 16-22: Promote on X/Twitter and LinkedIn by sharing summarized breakdowns.',
+                    'Days 23-30: Gain first 250 free subscribers and secure first sponsor link.'
+                ]
+            },
+            {
+                id: 'high-ticket-closing',
+                title: 'Remote Sales & High-Ticket Closing Service',
+                category: 'B2B & High-Ticket Services',
+                budgetCategory: 'low',
+                capital: '$0 - $100',
+                difficulty: 'Intermediate',
+                summary: 'Partner with online course creators and high-ticket coaches to convert inbound leads into paying clients via video calls.',
+                swotS: 'Zero startup capital required; 10-15% commission per closed deal.',
+                swotW: 'Directly tied to personal time spent on sales calls.',
+                roadmap: [
+                    'Days 1-7: Study high-ticket closing frameworks and objection handling.',
+                    'Days 8-15: Reach out to 50 active info-product creators on Instagram/Skool.',
+                    'Days 16-22: Mock call evaluations with potential partners.',
+                    'Days 23-30: Begin taking scheduled discovery calls.'
+                ]
+            },
+            {
+                id: 'digital-event-hosting',
+                title: 'Virtual Summit & Webinar Production',
+                category: 'B2B & High-Ticket Services',
+                budgetCategory: 'medium',
+                capital: '$300 - $700',
+                difficulty: 'Advanced',
+                summary: 'Organize, produce, and monetize virtual masterclasses and multi-speaker online summits for business networks.',
+                swotS: 'High ticket ticket prices and sponsor opportunities.',
+                swotW: 'Requires strong project management and speaker coordination skills.',
+                roadmap: [
+                    'Days 1-7: Pitch event concept to 10 prospective industry speakers.',
+                    'Days 8-15: Build event landing page on Luma or Zoom Events.',
+                    'Days 16-22: Launch promotional campaign across LinkedIn and partner mailing lists.',
+                    'Days 23-30: Host virtual event and sell backend masterclass access.'
+                ]
+            },
+            {
+                id: 'micro-saas-wrapper',
+                title: 'Niche AI Micro-SaaS App',
+                category: 'AI & Digital Services',
+                budgetCategory: 'high',
+                capital: '$1,000 - $3,000',
+                difficulty: 'Advanced',
+                summary: 'Build a targeted, single-feature web app using no-code app builders (Bubble/FlutterFlow) connected to OpenAI API.',
+                swotS: 'High recurring SaaS revenue model with infinite scalability.',
+                swotW: 'Higher technical setup required; continuous product iteration needed.',
+                roadmap: [
+                    'Days 1-7: Map out MVP workflow using Bubble.io and OpenAI API.',
+                    'Days 8-15: Build functional prototype focusing on 1 primary core feature.',
+                    'Days 16-22: Recruit 10 beta testers on Reddit & Product Hunt.',
+                    'Days 23-30: Launch paid tier ($19/mo) and iterate based on user feedback.'
                 ]
             }
         ];
@@ -591,3 +719,4 @@
     </script>
 </body>
 </html>
+    
