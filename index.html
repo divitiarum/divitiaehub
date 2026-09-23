@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Divitiae Hub | Wealth & Brand Blueprints</title>
+  <title>Divitiae Hub | Powered by IdeaSpark</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script>
@@ -12,13 +12,11 @@
       theme: {
         extend: {
           colors: {
-            champagne: {
-              100: '#FAF6F0',
-              200: '#F3EAD8',
-              300: '#E5D3B3',
-              400: '#D4B886',
-              500: '#C59B27',
-              600: '#A37B1F',
+            gold: {
+              400: '#FBBF24',
+              500: '#F59E0B',
+              600: '#D97706',
+              700: '#B45309',
             }
           }
         }
@@ -26,95 +24,94 @@
     }
   </script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
-    
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
     body { font-family: 'Plus Jakarta Sans', sans-serif; }
-    h1, h2, h3, .serif-font { font-family: 'Cinzel', serif; }
-    
-    .gold-gradient { background: linear-gradient(135deg, #E5D3B3 0%, #C59B27 50%, #8A6510 100%); }
-    .gold-text { background: linear-gradient(135deg, #F3EAD8 0%, #D4B886 50%, #C59B27 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .glass-card { background: rgba(18, 16, 23, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(212, 184, 134, 0.15); }
-    .glass-card-hover:hover { border-color: rgba(212, 184, 134, 0.4); transform: translateY(-2px); }
+    .gold-gradient { background: linear-gradient(135deg, #F59E0B 0%, #B45309 100%); }
+    .gold-text { background: linear-gradient(135deg, #FCD34D 0%, #F59E0B 50%, #D97706 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
   </style>
 </head>
-<body class="bg-[#0D0B0E] text-slate-200 min-h-screen flex flex-col justify-between selection:bg-amber-200 selection:text-slate-950">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-slate-950">
 
   <!-- Header / Navigation -->
-  <header class="border-b border-champagne-400/10 bg-[#0D0B0E]/90 backdrop-blur-md sticky top-0 z-50 px-6 py-5">
+  <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50 px-6 py-4">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-full gold-gradient flex items-center justify-center font-bold text-slate-950 text-xl shadow-lg shadow-amber-500/10 serif-font">
+        <div class="w-10 h-10 rounded-xl gold-gradient flex items-center justify-center font-extrabold text-slate-950 text-xl shadow-lg shadow-amber-500/20">
           D
         </div>
         <div>
-          <span class="text-xl font-bold tracking-widest text-white serif-font block leading-none">DIVITIAE</span>
-          <span class="text-[9px] font-semibold tracking-[0.2em] text-champagne-300 uppercase">Luxury Venture Hub</span>
+          <span class="text-xl font-black tracking-wider text-white">DIVITIAE HUB</span>
+          <span class="hidden sm:inline-block text-[10px] font-extrabold uppercase tracking-widest text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20 ml-2">
+            Powered by IdeaSpark
+          </span>
         </div>
       </div>
 
-      <a href="https://instagram.com/billionairestogether" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-xs font-semibold bg-champagne-400/10 hover:bg-champagne-400/20 text-champagne-200 px-4 py-2 rounded-full border border-champagne-400/30 transition shadow-sm">
-        <i data-lucide="instagram" class="w-3.5 h-3.5 text-champagne-300"></i>
-        <span>@billionairestogether</span>
-      </a>
+      <div class="flex items-center gap-4">
+        <a href="https://instagram.com/billionairestogether" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-xs sm:text-sm font-semibold bg-slate-900 hover:bg-slate-800 text-amber-400 px-4 py-2 rounded-xl border border-amber-500/30 transition shadow-md">
+          <i data-lucide="instagram" class="w-4 h-4 text-amber-400"></i>
+          <span>@billionairestogether</span>
+        </a>
+      </div>
     </div>
   </header>
 
   <!-- Hero Section -->
   <main class="max-w-7xl mx-auto px-6 py-12 flex-grow w-full">
-    <div class="text-center max-w-3xl mx-auto mb-12">
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-champagne-400/10 border border-champagne-400/20 text-champagne-300 text-xs font-medium tracking-wide mb-6">
-        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-        <span>Curated Blueprints for High-Ticket Ventures</span>
+    <div class="text-center max-w-3xl mx-auto mb-10">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold mb-6">
+        <i data-lucide="crown" class="w-4 h-4"></i>
+        <span>Exclusive Blueprint Engine for Diana’s Community</span>
       </div>
-      <h1 class="text-3xl sm:text-5xl font-bold text-white tracking-tight mb-4 leading-tight serif-font">
-        Build Your <span class="gold-text">Digital Empire</span>
+      <h1 class="text-4xl sm:text-6xl font-black text-white tracking-tight mb-4 leading-tight">
+        Turn Ambition Into <span class="gold-text">High-Profit Ventures</span>
       </h1>
-      <p class="text-slate-400 text-sm sm:text-base font-light leading-relaxed">
-        Select a high-ticket blueprint, simulate your projected ROI, and download turnkey execution toolkits directly to your phone or tablet.
+      <p class="text-slate-400 text-base sm:text-lg">
+        Discover verified remote high-ticket business models, simulate ROI, build Lean Canvases, and access passive launch blueprints.
       </p>
     </div>
 
-    <!-- VIP Banner -->
-    <div class="max-w-4xl mx-auto mb-14 p-8 rounded-3xl glass-card border border-champagne-400/30 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6 shadow-2xl relative overflow-hidden">
-      <div class="relative z-10">
-        <span class="text-[10px] uppercase tracking-[0.2em] font-bold text-champagne-300 bg-champagne-400/10 px-3 py-1 rounded-full border border-champagne-400/20 mb-3 inline-block">Exclusive Access</span>
-        <h3 class="text-2xl font-bold text-white mb-2 serif-font">The Founder's Execution Vault</h3>
-        <p class="text-slate-300 text-xs max-w-lg font-light leading-relaxed">Instant digital download containing pitch decks, brand strategy bibles, contract templates, and 50+ passive revenue frameworks.</p>
+    <!-- Monetization Banner (100% Passive VIP Vault) -->
+    <div class="max-w-4xl mx-auto mb-12 p-6 rounded-3xl bg-gradient-to-r from-amber-500/15 via-slate-900 to-amber-500/10 border border-amber-500/30 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
+      <div>
+        <span class="text-[10px] uppercase font-bold tracking-widest text-amber-400 bg-amber-500/20 px-2.5 py-1 rounded-full border border-amber-500/30 mb-2 inline-block">VIP Digital Access</span>
+        <h3 class="text-xl font-bold text-white mb-1">Get The VIP Founder Execution Vault ($27)</h3>
+        <p class="text-slate-400 text-xs">Instant download: Pitch templates, outreach scripts, and 50+ remote high-ticket blueprints.</p>
       </div>
-      
-      <!-- GUMROAD LINK CONNECTED -->
-      <a href="https://mcdiana.gumroad.com/l/vault" target="_blank" class="px-8 py-3.5 gold-gradient hover:opacity-95 text-slate-950 font-bold text-xs rounded-full transition shadow-lg shadow-amber-500/20 shrink-0 uppercase tracking-widest relative z-10">
+      <a href="https://gumroad.com" target="_blank" class="px-6 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs rounded-xl transition shadow-lg shadow-amber-500/20 shrink-0 uppercase tracking-wider">
         Unlock Vault ($27)
       </a>
     </div>
 
     <!-- Navigation Tabs -->
-    <div class="flex justify-center border-b border-champagne-400/10 mb-10 overflow-x-auto">
-      <button onclick="switchTab('explorer')" id="tab-explorer" class="px-6 py-3 font-medium text-xs sm:text-sm text-champagne-300 border-b-2 border-champagne-400 flex items-center gap-2 tracking-wide uppercase">
-        <i data-lucide="compass" class="w-4 h-4"></i> Blueprints
+    <div class="flex justify-center border-b border-slate-800 mb-8 overflow-x-auto">
+      <button onclick="switchTab('explorer')" id="tab-explorer" class="px-6 py-3 font-semibold text-sm text-amber-400 border-b-2 border-amber-500 flex items-center gap-2">
+        <i data-lucide="compass" class="w-4 h-4"></i> Idea Explorer
       </button>
-      <button onclick="switchTab('roi')" id="tab-roi" class="px-6 py-3 font-medium text-xs sm:text-sm text-slate-400 border-b-2 border-transparent hover:text-slate-200 flex items-center gap-2 tracking-wide uppercase">
-        <i data-lucide="calculator" class="w-4 h-4"></i> Revenue Simulator
+      <button onclick="switchTab('roi')" id="tab-roi" class="px-6 py-3 font-semibold text-sm text-slate-400 border-b-2 border-transparent hover:text-slate-200 flex items-center gap-2">
+        <i data-lucide="calculator" class="w-4 h-4"></i> ROI Calculator
       </button>
-      <button onclick="switchTab('canvas')" id="tab-canvas" class="px-6 py-3 font-medium text-xs sm:text-sm text-slate-400 border-b-2 border-transparent hover:text-slate-200 flex items-center gap-2 tracking-wide uppercase">
-        <i data-lucide="layout" class="w-4 h-4"></i> Brand Canvas
+      <button onclick="switchTab('canvas')" id="tab-canvas" class="px-6 py-3 font-semibold text-sm text-slate-400 border-b-2 border-transparent hover:text-slate-200 flex items-center gap-2">
+        <i data-lucide="layout" class="w-4 h-4"></i> Lean Canvas
       </button>
-      <button onclick="switchTab('saved')" id="tab-saved" class="px-6 py-3 font-medium text-xs sm:text-sm text-slate-400 border-b-2 border-transparent hover:text-slate-200 flex items-center gap-2 tracking-wide uppercase">
-        <i data-lucide="bookmark" class="w-4 h-4"></i> Saved (<span id="saved-count">0</span>)
+      <button onclick="switchTab('saved')" id="tab-saved" class="px-6 py-3 font-semibold text-sm text-slate-400 border-b-2 border-transparent hover:text-slate-200 flex items-center gap-2">
+        <i data-lucide="bookmark" class="w-4 h-4"></i> Saved Bookmarks (<span id="saved-count">0</span>)
       </button>
     </div>
 
-    <!-- Section 1: Blueprints Explorer -->
+    <!-- Section 1: Idea Explorer -->
     <section id="sec-explorer" class="space-y-6">
-      <div class="flex flex-col sm:flex-row gap-4 justify-between items-center glass-card p-4 rounded-2xl">
-        <input type="text" id="search-input" onkeyup="filterIdeas()" placeholder="Search luxury ventures..." class="bg-[#0D0B0E] border border-champagne-400/20 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-champagne-400 w-full sm:w-80">
-        <select id="category-filter" onchange="filterIdeas()" class="bg-[#0D0B0E] border border-champagne-400/20 rounded-xl px-4 py-2.5 text-xs text-champagne-200 focus:outline-none focus:border-champagne-400 w-full sm:w-auto">
-          <option value="all">All Categories</option>
-          <option value="high-ticket">Remote High-Ticket</option>
-          <option value="digital">Digital Assets</option>
-          <option value="agency">Luxury Agency</option>
-          <option value="creator">Creator Economy</option>
-        </select>
+      <div class="flex flex-col sm:flex-row gap-4 justify-between items-center bg-slate-900/50 p-4 rounded-2xl border border-slate-800">
+        <input type="text" id="search-input" onkeyup="filterIdeas()" placeholder="Search blueprints or skills..." class="bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-amber-500 w-full sm:w-80">
+        <div class="flex gap-2 w-full sm:w-auto">
+          <select id="category-filter" onchange="filterIdeas()" class="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-amber-500">
+            <option value="all">All Categories</option>
+            <option value="high-ticket">Remote High-Ticket</option>
+            <option value="digital">Digital Assets</option>
+            <option value="agency">High-Ticket Agency</option>
+            <option value="creator">Creator Economy</option>
+          </select>
+        </div>
       </div>
 
       <div id="ideas-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -123,87 +120,93 @@
     </section>
 
     <!-- Section 2: ROI Calculator -->
-    <section id="sec-roi" class="hidden max-w-xl mx-auto glass-card p-8 rounded-3xl border border-champagne-400/20">
-      <h2 class="text-2xl font-bold text-white mb-2 serif-font text-center">Revenue Projection</h2>
-      <p class="text-slate-400 text-xs mb-8 text-center font-light">Estimate potential earnings based on client volume and pricing.</p>
+    <section id="sec-roi" class="hidden max-w-2xl mx-auto bg-slate-900/80 border border-slate-800 p-8 rounded-3xl">
+      <h2 class="text-2xl font-bold text-white mb-2 flex items-center gap-2">
+        <i data-lucide="calculator" class="text-amber-400"></i> Business ROI Simulator
+      </h2>
+      <p class="text-slate-400 text-sm mb-6">Estimate potential monthly and annual revenue based on client pricing and volume.</p>
       
       <div class="space-y-6">
         <div>
-          <label class="block text-[11px] uppercase tracking-wider text-champagne-300 mb-2">Package Price ($)</label>
-          <input type="number" id="roi-price" value="3500" oninput="calculateROI()" class="w-full bg-[#0D0B0E] border border-champagne-400/20 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-champagne-400">
+          <label class="block text-xs font-semibold uppercase text-slate-400 mb-2">Average Price Per Client / Package ($)</label>
+          <input type="number" id="roi-price" value="2500" oninput="calculateROI()" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:outline-none focus:border-amber-500">
         </div>
         <div>
-          <label class="block text-[11px] uppercase tracking-wider text-champagne-300 mb-2">Clients / Sales Per Month</label>
-          <input type="number" id="roi-clients" value="3" oninput="calculateROI()" class="w-full bg-[#0D0B0E] border border-champagne-400/20 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-champagne-400">
+          <label class="block text-xs font-semibold uppercase text-slate-400 mb-2">Clients / Sales Per Month</label>
+          <input type="number" id="roi-clients" value="4" oninput="calculateROI()" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:outline-none focus:border-amber-500">
         </div>
         <div>
-          <label class="block text-[11px] uppercase tracking-wider text-champagne-300 mb-2">Operating Expenses ($)</label>
-          <input type="number" id="roi-costs" value="200" oninput="calculateROI()" class="w-full bg-[#0D0B0E] border border-champagne-400/20 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-champagne-400">
+          <label class="block text-xs font-semibold uppercase text-slate-400 mb-2">Estimated Monthly Operating Cost ($)</label>
+          <input type="number" id="roi-costs" value="150" oninput="calculateROI()" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:outline-none focus:border-amber-500">
         </div>
 
-        <div class="p-6 rounded-2xl bg-champagne-400/10 border border-champagne-400/20 text-center">
-          <p class="text-[10px] uppercase font-bold tracking-widest text-champagne-300 mb-1">Projected Monthly Income</p>
-          <p id="roi-monthly" class="text-3xl font-bold text-white mb-1 serif-font">$10,300</p>
-          <p class="text-xs text-slate-400">Annual Revenue Potential: <span id="roi-annual" class="text-champagne-300 font-bold">$123,600</span></p>
+        <div class="p-6 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-center">
+          <p class="text-xs uppercase font-bold text-amber-400 mb-1">Projected Monthly Profit</p>
+          <p id="roi-monthly" class="text-3xl font-black text-white mb-2">$9,850</p>
+          <p class="text-xs text-slate-400">Annual Profit Potential: <span id="roi-annual" class="text-amber-400 font-bold">$118,200</span></p>
         </div>
       </div>
     </section>
 
-    <!-- Section 3: Brand Canvas -->
-    <section id="sec-canvas" class="hidden glass-card p-8 rounded-3xl border border-champagne-400/20">
+    <!-- Section 3: Lean Canvas -->
+    <section id="sec-canvas" class="hidden bg-slate-900/80 border border-slate-800 p-8 rounded-3xl">
       <div class="flex justify-between items-center mb-6">
         <div>
-          <h2 class="text-2xl font-bold text-white serif-font">Venture Architecture</h2>
-          <p class="text-slate-400 text-xs font-light">Outline your business strategy in real-time.</p>
+          <h2 class="text-2xl font-bold text-white">Interactive Lean Canvas</h2>
+          <p class="text-slate-400 text-sm">Map out your 1-page business plan directly in your browser.</p>
         </div>
-        <button onclick="saveCanvas()" class="px-5 py-2.5 gold-gradient text-slate-950 font-bold rounded-full text-xs hover:opacity-90 transition uppercase tracking-wider">Save Architecture</button>
+        <button onclick="saveCanvas()" class="px-4 py-2 bg-amber-500 text-slate-950 font-bold rounded-xl text-xs hover:bg-amber-400">Save Canvas</button>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <textarea id="canvas-problem" placeholder="Target Problem (What friction are you solving?)" class="bg-[#0D0B0E] border border-champagne-400/20 p-4 rounded-xl text-xs text-white focus:border-champagne-400 h-32 focus:outline-none"></textarea>
-        <textarea id="canvas-solution" placeholder="Core Offer (What high-value deliverable do you provide?)" class="bg-[#0D0B0E] border border-champagne-400/20 p-4 rounded-xl text-xs text-white focus:border-champagne-400 h-32 focus:outline-none"></textarea>
-        <textarea id="canvas-uvp" placeholder="Unique Positioning (Why clients choose you)" class="bg-[#0D0B0E] border border-champagne-400/20 p-4 rounded-xl text-xs text-white focus:border-champagne-400 h-32 focus:outline-none"></textarea>
-        <textarea id="canvas-channels" placeholder="Acquisition Channels (Social, referrals, outbound)" class="bg-[#0D0B0E] border border-champagne-400/20 p-4 rounded-xl text-xs text-white focus:border-champagne-400 h-32 focus:outline-none"></textarea>
-        <textarea id="canvas-revenue" placeholder="Monetization Structure (Pricing models & digital products)" class="bg-[#0D0B0E] border border-champagne-400/20 p-4 rounded-xl text-xs text-white focus:border-champagne-400 h-32 focus:outline-none"></textarea>
-        <textarea id="canvas-costs" placeholder="Tooling & Operations (Software & hosting)" class="bg-[#0D0B0E] border border-champagne-400/20 p-4 rounded-xl text-xs text-white focus:border-champagne-400 h-32 focus:outline-none"></textarea>
+        <textarea id="canvas-problem" placeholder="Problem (Top 3 problems you solve)" class="bg-slate-950 border border-slate-800 p-4 rounded-xl text-sm text-white focus:border-amber-500 h-32 focus:outline-none"></textarea>
+        <textarea id="canvas-solution" placeholder="Solution (Top 3 features/services)" class="bg-slate-950 border border-slate-800 p-4 rounded-xl text-sm text-white focus:border-amber-500 h-32 focus:outline-none"></textarea>
+        <textarea id="canvas-uvp" placeholder="Unique Value Proposition (Single clear message)" class="bg-slate-950 border border-slate-800 p-4 rounded-xl text-sm text-white focus:border-amber-500 h-32 focus:outline-none"></textarea>
+        <textarea id="canvas-channels" placeholder="Channels (Pathways to customers)" class="bg-slate-950 border border-slate-800 p-4 rounded-xl text-sm text-white focus:border-amber-500 h-32 focus:outline-none"></textarea>
+        <textarea id="canvas-revenue" placeholder="Revenue Streams (Pricing model & lifetime value)" class="bg-slate-950 border border-slate-800 p-4 rounded-xl text-sm text-white focus:border-amber-500 h-32 focus:outline-none"></textarea>
+        <textarea id="canvas-costs" placeholder="Cost Structure (Fixed & variable expenses)" class="bg-slate-950 border border-slate-800 p-4 rounded-xl text-sm text-white focus:border-amber-500 h-32 focus:outline-none"></textarea>
       </div>
     </section>
 
-    <!-- Section 4: Saved -->
+    <!-- Section 4: Saved Bookmarks -->
     <section id="sec-saved" class="hidden">
-      <div id="saved-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      <div id="saved-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Saved dynamically -->
+      </div>
     </section>
   </main>
 
   <!-- Detail Modal -->
-  <div id="idea-modal" class="fixed inset-0 bg-[#0D0B0E]/90 backdrop-blur-md hidden z-50 flex items-center justify-center p-6">
-    <div class="glass-card border border-champagne-400/30 max-w-2xl w-full rounded-3xl p-6 sm:p-8 overflow-y-auto max-h-[90vh]">
+  <div id="idea-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden z-50 flex items-center justify-center p-6">
+    <div class="bg-slate-900 border border-slate-800 max-w-2xl w-full rounded-3xl p-6 sm:p-8 overflow-y-auto max-h-[90vh]">
       <div class="flex justify-between items-start mb-4">
         <div>
-          <span id="modal-category" class="text-[10px] uppercase tracking-[0.2em] text-champagne-300 font-bold">Category</span>
-          <h2 id="modal-title" class="text-2xl font-bold text-white serif-font mt-1">Title</h2>
+          <span id="modal-category" class="text-xs uppercase tracking-widest text-amber-400 font-bold">Category</span>
+          <h2 id="modal-title" class="text-2xl font-bold text-white">Title</h2>
         </div>
         <button onclick="closeModal()" class="p-2 text-slate-400 hover:text-white"><i data-lucide="x"></i></button>
       </div>
-      <p id="modal-desc" class="text-slate-300 text-xs leading-relaxed font-light mb-6">Description</p>
+      <p id="modal-desc" class="text-slate-300 text-sm mb-6">Description</p>
       
+      <!-- SWOT Section -->
       <div class="mb-6">
-        <h3 class="font-bold text-white text-xs uppercase tracking-widest mb-3 flex items-center gap-2"><i data-lucide="shield" class="text-champagne-300 w-4 h-4"></i> Venture Analysis</h3>
+        <h3 class="font-bold text-white text-sm uppercase tracking-wider mb-2 flex items-center gap-2"><i data-lucide="shield" class="text-amber-400"></i> SWOT Analysis</h3>
         <div id="modal-swot" class="grid grid-cols-2 gap-3 text-xs"></div>
       </div>
 
+      <!-- Roadmap Section -->
       <div class="mb-6">
-        <h3 class="font-bold text-white text-xs uppercase tracking-widest mb-3 flex items-center gap-2"><i data-lucide="calendar" class="text-champagne-300 w-4 h-4"></i> 30-Day Execution Plan</h3>
-        <ul id="modal-steps" class="space-y-2 text-xs text-slate-300 list-disc list-inside font-light"></ul>
+        <h3 class="font-bold text-white text-sm uppercase tracking-wider mb-2 flex items-center gap-2"><i data-lucide="calendar" class="text-amber-400"></i> 30-Day Launch Steps</h3>
+        <ul id="modal-steps" class="space-y-2 text-xs text-slate-300 list-disc list-inside"></ul>
       </div>
 
-      <!-- GUMROAD LINK CONNECTED -->
-      <div class="p-5 rounded-2xl bg-champagne-400/10 border border-champagne-400/20 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <!-- Passive Digital Download CTA -->
+      <div class="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
-          <h4 class="text-xs font-bold text-white serif-font">Download Venture Blueprint Toolkit</h4>
-          <p class="text-[11px] text-slate-400 font-light">Includes templates, decks, and outreach scripts.</p>
+          <h4 class="text-xs font-bold text-white">Download Complete Execution Toolkit</h4>
+          <p class="text-[11px] text-slate-400">Includes contract templates, digital assets, and outreach scripts.</p>
         </div>
-        <a href="https://mcdiana.gumroad.com/l/vault" target="_blank" class="px-5 py-2.5 gold-gradient text-slate-950 text-xs font-bold rounded-full transition shrink-0 uppercase tracking-wider">
+        <a href="https://gumroad.com" target="_blank" class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold rounded-xl transition shrink-0">
           Get Kit ($19)
         </a>
       </div>
@@ -211,12 +214,16 @@
   </div>
 
   <!-- Footer -->
-  <footer class="border-t border-champagne-400/10 bg-[#0D0B0E] py-8 px-6">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-light">
-      <p>© 2026 DIVITIAE HUB. Curated for @billionairestogether.</p>
-      <a href="https://instagram.com/billionairestogether" target="_blank" class="hover:text-champagne-300 transition flex items-center gap-1">
-        <i data-lucide="instagram" class="w-3.5 h-3.5"></i> @billionairestogether
-      </a>
+  <footer class="border-t border-slate-800 bg-slate-950 py-8 px-6">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+      <p>© 2026 DIVITIAE HUB. Curated by Diana for the @billionairestogether community.</p>
+      <div class="flex items-center gap-4">
+        <a href="https://instagram.com/billionairestogether" target="_blank" class="hover:text-amber-400 transition flex items-center gap-1">
+          <i data-lucide="instagram" class="w-3.5 h-3.5"></i> @billionairestogether
+        </a>
+        <span>•</span>
+        <span class="text-slate-400">Powered by IdeaSpark</span>
+      </div>
     </div>
   </footer>
 
@@ -228,57 +235,57 @@
         category: "high-ticket",
         cost: "$0 - $50",
         revenue: "$5,000 - $15,000/mo",
-        desc: "Package advisory frameworks and strategy blueprints for luxury brands and high-net-worth founders.",
-        swot: { S: "High profit margins (90%+)", W: "Requires focused positioning", O: "Global remote clients", T: "Initial authority build" },
-        steps: ["Day 1-7: Define luxury advisory tier", "Day 8-14: Package proposal decks", "Day 15-30: Outreach to 30 target founders"]
+        desc: "Package advisory frameworks and high-level strategy blueprints for luxury brands and high-net-worth founders.",
+        swot: { S: "High profit margins (90%+)", W: "Requires niche positioning", O: "Global remote client base", T: "Initial authority build" },
+        steps: ["Day 1-7: Define luxury advisory tier", "Day 8-14: Package digital proposal decks", "Day 15-30: Outreach to 30 target founders"]
       },
       {
         id: 2,
-        title: "High-Ticket Sales Operations",
+        title: "High-Ticket Sales Operations Engine",
         category: "high-ticket",
         cost: "$0",
         revenue: "$4,000 - $10,000/mo",
-        desc: "Build asynchronous intake funnels and qualification systems for creators selling premium packages.",
+        desc: "Build asynchronous sales funnels and automated qualification forms for creators selling $3,000+ packages.",
         swot: { S: "High retainer value", W: "Technical setup", O: "Scaling high-ticket creators", T: "Lead quality drops" },
-        steps: ["Day 1-7: Map intake funnels", "Day 8-14: Audit target creator flows", "Day 15-30: Pitch strategy implementation"]
+        steps: ["Day 1-7: Map high-ticket intake funnel", "Day 8-14: Audit target creator intake flows", "Day 15-30: Pitch strategy implementation"]
       },
       {
         id: 3,
-        title: "Luxury Brand Architecture Studio",
-        category: "agency",
+        title: "Luxury Brand Architecture Agency",
+        category: "high-ticket",
         cost: "$100",
         revenue: "$8,000 - $20,000/mo",
-        desc: "Transform boutique online businesses into ultra-premium brands through aesthetic brand strategy.",
-        swot: { S: "Ultra-high perceived value", W: "Needs aesthetic precision", O: "E-commerce expansion", T: "Market shifts" },
-        steps: ["Day 1-7: Create flagship brand guide", "Day 8-14: Audit 15 luxury brand sites", "Day 15-30: Close initial retainer clients"]
+        desc: "Transform boutique online businesses into ultra-premium brands through aesthetic brand bibles and story strategy.",
+        swot: { S: "Ultra-high perceived value", W: "Needs aesthetic focus", O: "E-commerce expansion", T: "Market shifts" },
+        steps: ["Day 1-7: Create flagship luxury brand guide", "Day 8-14: Audit 15 target brand websites", "Day 15-30: Close initial retainer clients"]
       },
       {
         id: 4,
-        title: "High-Ticket Affiliate Placement",
+        title: "High-Ticket Affiliate Referral System",
         category: "high-ticket",
         cost: "$0",
         revenue: "$3,000 - $12,000/mo",
-        desc: "Refer verified clients to premium agencies or software suites for recurring high-ticket commissions.",
+        desc: "Refer verified high-ticket clients to premium agencies, legal firms, or software suites for 10-20% recurring commissions.",
         swot: { S: "100% passive referral income", W: "Requires trusted network", O: "Scalable partnership deals", T: "Partner churn" },
-        steps: ["Day 1-7: Apply to top affiliate programs", "Day 8-14: Build resource recommendation page", "Day 15-30: Drive targeted traffic"]
+        steps: ["Day 1-7: Apply to top high-ticket affiliate programs", "Day 8-14: Build resource recommendation page", "Day 15-30: Drive targeted traffic via content"]
       },
       {
         id: 5,
-        title: "AI Content & Brand Studio",
+        title: "AI Brand & Automation Studio",
         category: "agency",
         cost: "$50",
-        revenue: "$3,000 - $7,000/mo",
-        desc: "Automate social media branding assets and scheduling for creators using streamlined AI pipelines.",
+        revenue: "$3,000/mo",
+        desc: "Automate social media content creation, branding assets, and scheduling for creators using AI production pipelines.",
         swot: { S: "High demand", W: "Client retention", O: "Scalable agency model", T: "Tool updates" },
-        steps: ["Day 1-7: Pick target creator niche", "Day 8-14: Package offer into 3 tiers", "Day 15-30: Direct outreach to creators"]
+        steps: ["Day 1-7: Pick target creator niche", "Day 8-14: Package offer into 3 tiers", "Day 15-30: Direct outreach to 50 creators"]
       },
       {
         id: 6,
-        title: "Digital Vault & Template Studio",
+        title: "Digital Template & Vault Studio",
         category: "digital",
         cost: "$20",
         revenue: "$1,500 - $5,000/mo",
-        desc: "Build and sell high-aesthetic Canva templates, Notion dashboards, and founder planning vaults.",
+        desc: "Build and sell high-aesthetic Canva templates, Notion dashboards, and founder planning vaults for automated income.",
         swot: { S: "100% passive margins", W: "Initial template design", O: "Viral social distribution", T: "Copycats" },
         steps: ["Day 1-7: Identify top-selling digital kits", "Day 8-14: Build 3 flagship digital vaults", "Day 15-30: Launch via link-in-bio"]
       }
@@ -289,23 +296,23 @@
     function renderIdeas(data = ideasData) {
       const grid = document.getElementById('ideas-grid');
       grid.innerHTML = data.map(idea => `
-        <div class="glass-card glass-card-hover rounded-3xl p-6 flex flex-col justify-between transition duration-300">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between hover:border-amber-500/40 transition">
           <div>
-            <div class="flex justify-between items-start mb-4">
-              <span class="text-[9px] uppercase tracking-[0.2em] font-bold text-champagne-300 bg-champagne-400/10 px-3 py-1 rounded-full border border-champagne-400/20">${idea.category}</span>
-              <button onclick="toggleSave(${idea.id})" class="text-slate-400 hover:text-champagne-300 transition">
-                <i data-lucide="bookmark" class="w-4 h-4 ${savedIds.includes(idea.id) ? 'fill-champagne-300 text-champagne-300' : ''}"></i>
+            <div class="flex justify-between items-start mb-3">
+              <span class="text-[10px] uppercase font-bold tracking-widest text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-full">${idea.category}</span>
+              <button onclick="toggleSave(${idea.id})" class="text-slate-400 hover:text-amber-400">
+                <i data-lucide="bookmark" class="w-4 h-4 ${savedIds.includes(idea.id) ? 'fill-amber-400 text-amber-400' : ''}"></i>
               </button>
             </div>
-            <h3 class="font-bold text-lg text-white mb-2 serif-font">${idea.title}</h3>
-            <p class="text-slate-400 text-xs mb-6 font-light leading-relaxed line-clamp-2">${idea.desc}</p>
-            <div class="flex justify-between text-xs text-slate-300 font-medium mb-6 bg-[#0D0B0E] p-3 rounded-xl border border-champagne-400/10">
-              <span>Investment: <strong class="text-champagne-300">${idea.cost}</strong></span>
-              <span>Potential: <strong class="text-champagne-300">${idea.revenue}</strong></span>
+            <h3 class="font-bold text-lg text-white mb-2">${idea.title}</h3>
+            <p class="text-slate-400 text-xs mb-4 line-clamp-2">${idea.desc}</p>
+            <div class="flex justify-between text-xs text-slate-300 font-semibold mb-6 bg-slate-950 p-3 rounded-xl border border-slate-800/80">
+              <span>Cost: <strong class="text-amber-400">${idea.cost}</strong></span>
+              <span>Potential: <strong class="text-amber-400">${idea.revenue}</strong></span>
             </div>
           </div>
-          <button onclick="openModal(${idea.id})" class="w-full py-3 bg-champagne-400/10 hover:bg-champagne-400/20 text-champagne-200 border border-champagne-400/20 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-2 tracking-wide uppercase">
-            Explore Blueprint <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          <button onclick="openModal(${idea.id})" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-1">
+            View Full Blueprint <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
           </button>
         </div>
       `).join('');
@@ -316,10 +323,10 @@
     function switchTab(tab) {
       ['explorer', 'roi', 'canvas', 'saved'].forEach(t => {
         document.getElementById(`sec-${t}`).classList.add('hidden');
-        document.getElementById(`tab-${t}`).className = 'px-6 py-3 font-medium text-xs sm:text-sm text-slate-400 border-b-2 border-transparent hover:text-slate-200 flex items-center gap-2 tracking-wide uppercase';
+        document.getElementById(`tab-${t}`).className = 'px-6 py-3 font-semibold text-sm text-slate-400 border-b-2 border-transparent hover:text-slate-200 flex items-center gap-2';
       });
       document.getElementById(`sec-${tab}`).classList.remove('hidden');
-      document.getElementById(`tab-${tab}`).className = 'px-6 py-3 font-medium text-xs sm:text-sm text-champagne-300 border-b-2 border-champagne-400 flex items-center gap-2 tracking-wide uppercase';
+      document.getElementById(`tab-${tab}`).className = 'px-6 py-3 font-semibold text-sm text-amber-400 border-b-2 border-amber-500 flex items-center gap-2';
       if (tab === 'saved') renderSaved();
     }
 
@@ -329,10 +336,10 @@
       document.getElementById('modal-category').innerText = idea.category;
       document.getElementById('modal-desc').innerText = idea.desc;
       document.getElementById('modal-swot').innerHTML = `
-        <div class="p-3 bg-[#0D0B0E] rounded-xl border border-champagne-400/10"><strong class="text-emerald-400">Strengths:</strong> ${idea.swot.S}</div>
-        <div class="p-3 bg-[#0D0B0E] rounded-xl border border-champagne-400/10"><strong class="text-rose-400">Considerations:</strong> ${idea.swot.W}</div>
-        <div class="p-3 bg-[#0D0B0E] rounded-xl border border-champagne-400/10"><strong class="text-champagne-300">Opportunities:</strong> ${idea.swot.O}</div>
-        <div class="p-3 bg-[#0D0B0E] rounded-xl border border-champagne-400/10"><strong class="text-sky-400">Market Dynamics:</strong> ${idea.swot.T}</div>
+        <div class="p-2 bg-slate-950 rounded-lg"><strong class="text-emerald-400">S:</strong> ${idea.swot.S}</div>
+        <div class="p-2 bg-slate-950 rounded-lg"><strong class="text-rose-400">W:</strong> ${idea.swot.W}</div>
+        <div class="p-2 bg-slate-950 rounded-lg"><strong class="text-amber-400">O:</strong> ${idea.swot.O}</div>
+        <div class="p-2 bg-slate-950 rounded-lg"><strong class="text-sky-400">T:</strong> ${idea.swot.T}</div>
       `;
       document.getElementById('modal-steps').innerHTML = idea.steps.map(s => `<li>${s}</li>`).join('');
       document.getElementById('idea-modal').classList.remove('hidden');
@@ -360,14 +367,14 @@
       const savedIdeas = ideasData.filter(i => savedIds.includes(i.id));
       const grid = document.getElementById('saved-grid');
       if (!savedIdeas.length) {
-        grid.innerHTML = `<p class="text-slate-500 text-xs col-span-full text-center py-12 font-light">No saved blueprints yet. Bookmark ideas from the Explorer!</p>`;
+        grid.innerHTML = `<p class="text-slate-500 text-sm col-span-full text-center py-12">No saved ideas yet. Bookmark blueprints from the Explorer!</p>`;
         return;
       }
       grid.innerHTML = savedIdeas.map(idea => `
-        <div class="glass-card rounded-3xl p-6">
-          <h3 class="font-bold text-lg text-white mb-2 serif-font">${idea.title}</h3>
-          <p class="text-slate-400 text-xs mb-4 font-light">${idea.desc}</p>
-          <button onclick="toggleSave(${idea.id}); renderSaved();" class="text-xs text-rose-400 font-medium hover:underline">Remove</button>
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+          <h3 class="font-bold text-lg text-white mb-2">${idea.title}</h3>
+          <p class="text-slate-400 text-xs mb-4">${idea.desc}</p>
+          <button onclick="toggleSave(${idea.id}); renderSaved();" class="text-xs text-rose-400 font-bold hover:underline">Remove</button>
         </div>
       `).join('');
     }
@@ -407,7 +414,7 @@
         costs: document.getElementById('canvas-costs').value,
       };
       localStorage.setItem('divitiae_canvas', JSON.stringify(canvasData));
-      alert('Venture Architecture saved!');
+      alert('Lean Canvas saved successfully!');
     }
 
     // Initialize
@@ -425,4 +432,3 @@
   </script>
 </body>
 </html>
-
