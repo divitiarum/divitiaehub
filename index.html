@@ -1,114 +1,593 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Divitiae Hub powered by IdeaSparks</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Divitiae Hub | Business Idea Generator & Launch Workspace</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body {
-            background-color: #0d0f12;
-            color: #f3f4f6;
-            font-family: system-ui, -apple-system, sans-serif;
-        }
-        .gold-gradient-text {
-            background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .gold-border {
-            border-color: rgba(212, 175, 55, 0.3);
-        }
-        .gold-border:hover {
-            border-color: rgba(212, 175, 55, 0.8);
-        }
-        .gold-btn {
-            background: linear-gradient(135deg, #bf953f, #b38728);
-            color: #000;
-            font-weight: 600;
-        }
-        .gold-btn:hover {
-            background: linear-gradient(135deg, #d4af37, #fcf6ba);
-        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .gold-gradient-text { background: linear-gradient(135deg, #fef08a, #eab308, #ca8a04); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .gold-btn { background: linear-gradient(135deg, #eab308, #ca8a04); color: #000; font-weight: 700; }
+        .gold-btn:hover { background: linear-gradient(135deg, #fef08a, #eab308); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #111827; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #374151; border-radius: 3px; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between">
+<body class="bg-gray-950 text-gray-100 min-h-screen flex flex-col justify-between selection:bg-yellow-500 selection:text-black">
 
-    <!-- Header Navigation -->
-    <header class="border-b border-gray-800 bg-gray-900/50 backdrop-blur sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div>
-                <h1 class="text-2xl font-bold tracking-wide gold-gradient-text">DIVITIAE HUB</h1>
-                <p class="text-xs text-gray-400 font-medium tracking-wider uppercase">powered by IdeaSparks</p>
+    <!-- NAVIGATION HEADER -->
+    <header class="sticky top-0 z-40 border-b border-gray-800 bg-gray-950/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="p-2.5 bg-yellow-500/10 rounded-xl border border-yellow-500/20">
+                    <i data-lucide="sparkles" class="w-6 h-6 text-yellow-400"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-extrabold tracking-tight gold-gradient-text">DIVITIAE HUB</h1>
+                    <p class="text-[10px] text-gray-400 font-semibold tracking-widest uppercase">powered by IdeaSparks</p>
+                </div>
             </div>
-            <nav class="hidden md:flex space-x-6 text-sm text-gray-300">
-                <a href="#explorer" class="hover:text-yellow-500 transition">Explorer</a>
-                <a href="#calculator" class="hover:text-yellow-500 transition">ROI Calculator</a>
-                <a href="#vault" class="hover:text-yellow-500 transition">Premium Vault</a>
+            
+            <nav class="hidden md:flex items-center gap-1 bg-gray-900/80 p-1.5 rounded-full border border-gray-800">
+                <button onclick="switchTab('explorer')" id="tab-explorer" class="px-5 py-2 rounded-full text-sm font-semibold transition bg-yellow-500 text-black shadow-lg">
+                    <i data-lucide="compass" class="w-4 h-4 inline mr-1.5"></i>Explorer
+                </button>
+                <button onclick="switchTab('quiz')" id="tab-quiz" class="px-5 py-2 rounded-full text-sm font-semibold transition text-gray-400 hover:text-white">
+                    <i data-lucide="brain-circuit" class="w-4 h-4 inline mr-1.5"></i>Match Quiz
+                </button>
+                <button onclick="switchTab('calculator')" id="tab-calculator" class="px-5 py-2 rounded-full text-sm font-semibold transition text-gray-400 hover:text-white">
+                    <i data-lucide="calculator" class="w-4 h-4 inline mr-1.5"></i>Financial Modeler
+                </button>
+                <button onclick="switchTab('workspace')" id="tab-workspace" class="px-5 py-2 rounded-full text-sm font-semibold transition text-gray-400 hover:text-white relative">
+                    <i data-lucide="layout-dashboard" class="w-4 h-4 inline mr-1.5"></i>Workspace
+                    <span id="saved-badge" class="hidden absolute -top-1 -right-1 bg-yellow-400 text-black text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">0</span>
+                </button>
             </nav>
+
+            <button onclick="triggerSurprise()" class="gold-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 shadow-lg hover:scale-105 transition active:scale-95">
+                <i data-lucide="dices" class="w-4 h-4"></i>
+                <span>Surprise Me</span>
+            </button>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="max-w-5xl mx-auto text-center px-4 py-16">
-        <span class="text-xs tracking-widest text-yellow-500 uppercase font-semibold border border-yellow-500/30 px-3 py-1 rounded-full">Billionaires Together Network</span>
-        <h2 class="text-4xl md:text-6xl font-extrabold mt-6 mb-4 gold-gradient-text">Luxury Business Blueprint Engine</h2>
-        <p class="text-gray-400 max-w-2xl mx-auto text-lg">
-            Access curated business models, calculate high-yield returns, and execute roadmaps crafted for ambitious founders.
-        </p>
-    </section>
+    <!-- MAIN CONTENT AREA -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
 
-    <!-- Main Features / Explorer -->
-    <section id="explorer" class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Card 1 -->
-        <div class="bg-gray-900/60 p-6 rounded-xl border gold-border transition duration-300">
-            <i class="fa-solid fa-compass text-2xl text-yellow-500 mb-4"></i>
-            <h3 class="text-xl font-bold mb-2 text-white">Business Explorer</h3>
-            <p class="text-gray-400 text-sm">Discover high-margin, scalable business models built for modern entrepreneurs.</p>
-        </div>
+        <!-- TAB 1: EXPLORER -->
+        <section id="view-explorer" class="space-y-8">
+            <!-- Hero -->
+            <div class="text-center max-w-3xl mx-auto pt-4 pb-2">
+                <span class="text-xs font-bold uppercase tracking-widest text-yellow-400 px-3 py-1 rounded-full bg-yellow-400/10 border border-yellow-400/20">Billionaire Blueprint Engine</span>
+                <h2 class="text-3xl sm:text-5xl font-black text-white mt-4 tracking-tight">Turn High-Yield Business Ideas Into Cash Flow</h2>
+                <p class="text-gray-400 mt-3 text-base sm:text-lg">Filter through 20+ verified business blueprints complete with SWOT, 30-day execution roadmaps, and revenue potential.</p>
+            </div>
 
-        <!-- Card 2 -->
-        <div class="bg-gray-900/60 p-6 rounded-xl border gold-border transition duration-300">
-            <i class="fa-solid fa-calculator text-2xl text-yellow-500 mb-4"></i>
-            <h3 class="text-xl font-bold mb-2 text-white">ROI Calculator</h3>
-            <p class="text-gray-400 text-sm">Project margins, break-even timelines, and revenue trajectories easily.</p>
-        </div>
+            <!-- Search & Filter Controls -->
+            <div class="glass p-5 rounded-2xl space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="relative md:col-span-2">
+                        <i data-lucide="search" class="w-5 h-5 absolute left-3.5 top-3.5 text-gray-500"></i>
+                        <input type="text" id="search-input" oninput="filterIdeas()" placeholder="Search blueprints (e.g. AI, SaaS, E-commerce)..." class="w-full bg-gray-900 border border-gray-800 rounded-xl pl-11 pr-4 py-2.5 text-sm text-white focus:outline-none focus:border-yellow-500 transition">
+                    </div>
+                    <div>
+                        <select id="category-filter" onchange="filterIdeas()" class="w-full bg-gray-900 border border-gray-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-yellow-500 transition">
+                            <option value="all">All Categories</option>
+                            <option value="AI & Digital Services">AI & Digital Services</option>
+                            <option value="E-Commerce & Products">E-Commerce & Products</option>
+                            <option value="Content & Creator Economy">Content & Creator Economy</option>
+                            <option value="B2B & High-Ticket Services">B2B & High-Ticket Services</option>
+                        </select>
+                    </div>
+                    <div>
+                        <select id="budget-filter" onchange="filterIdeas()" class="w-full bg-gray-900 border border-gray-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-yellow-500 transition">
+                            <option value="all">Any Startup Capital</option>
+                            <option value="low">Low Capital (&lt; $500)</option>
+                            <option value="medium">Medium Capital ($500 - $2,500)</option>
+                            <option value="high">High Capital (&gt; $2,500)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
 
-        <!-- Card 3 -->
-        <div class="bg-gray-900/60 p-6 rounded-xl border gold-border transition duration-300">
-            <i class="fa-solid fa-layer-group text-2xl text-yellow-500 mb-4"></i>
-            <h3 class="text-xl font-bold mb-2 text-white">30-Day Launch Roadmaps</h3>
-            <p class="text-gray-400 text-sm">Step-by-step execution plans to take ideas from canvas to cash flow.</p>
-        </div>
-    </section>
+            <!-- Idea Cards Grid -->
+            <div id="ideas-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
 
-    <!-- VIP Founder Execution Vault Section -->
-    <section id="vault" class="max-w-5xl mx-auto px-4 py-16">
-        <div class="bg-gradient-to-b from-gray-900 to-black p-8 md:p-12 rounded-2xl border gold-border text-center shadow-2xl relative overflow-hidden">
-            <div class="absolute -top-10 -right-10 w-40 h-40 bg-yellow-500/10 rounded-full blur-3xl"></div>
+        <!-- TAB 2: MATCH QUIZ -->
+        <section id="view-quiz" class="hidden max-w-3xl mx-auto glass p-8 rounded-3xl space-y-6">
+            <div class="text-center space-y-2">
+                <i data-lucide="sparkles" class="w-10 h-10 text-yellow-400 mx-auto"></i>
+                <h2 class="text-2xl font-bold text-white">Smart Match Finder</h2>
+                <p class="text-gray-400 text-sm">Answer 4 quick questions to compute your top 3 matching business blueprints.</p>
+            </div>
+
+            <div class="space-y-6 pt-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-300 mb-2">1. Available Capital</label>
+                    <select id="quiz-budget" class="w-full bg-gray-900 border border-gray-800 rounded-xl p-3 text-sm text-white">
+                        <option value="low">Under $500</option>
+                        <option value="medium">$500 to $2,500</option>
+                        <option value="high">$2,500+</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-300 mb-2">2. Time Commitment Per Week</label>
+                    <select id="quiz-hours" class="w-full bg-gray-900 border border-gray-800 rounded-xl p-3 text-sm text-white">
+                        <option value="part">5 - 15 Hours (Side Hustle)</option>
+                        <option value="full">20+ Hours (Full Focus)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-300 mb-2">3. Primary Niche Interest</label>
+                    <select id="quiz-niche" class="w-full bg-gray-900 border border-gray-800 rounded-xl p-3 text-sm text-white">
+                        <option value="AI & Digital Services">AI & Tech Automation</option>
+                        <option value="Content & Creator Economy">Social Media & Personal Branding</option>
+                        <option value="E-Commerce & Products">Physical Products & E-Commerce</option>
+                        <option value="B2B & High-Ticket Services">Consulting & High-Ticket B2B</option>
+                    </select>
+                </div>
+                <button onclick="runQuiz()" class="w-full gold-btn py-3.5 rounded-xl font-bold text-sm tracking-wide uppercase shadow-lg">Calculate My Matches</button>
+            </div>
+
+            <div id="quiz-results" class="hidden space-y-4 pt-6 border-t border-gray-800">
+                <h3 class="text-lg font-bold text-yellow-400">Your Top Recommended Models</h3>
+                <div id="quiz-matches-list" class="space-y-3"></div>
+            </div>
+        </section>
+
+        <!-- TAB 3: FINANCIAL MODELER -->
+        <section id="view-calculator" class="hidden max-w-4xl mx-auto glass p-8 rounded-3xl space-y-8">
+            <div class="text-center space-y-2">
+                <i data-lucide="calculator" class="w-10 h-10 text-yellow-400 mx-auto"></i>
+                <h2 class="text-2xl font-bold text-white">Interactive Revenue Simulator</h2>
+                <p class="text-gray-400 text-sm">Simulate unit economics, client volume, and net profit margins in real-time.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex justify-between text-sm font-semibold mb-2">
+                            <span class="text-gray-300">Monthly Clients / Customers:</span>
+                            <span id="calc-val-clients" class="text-yellow-400 font-bold">25</span>
+                        </div>
+                        <input type="range" id="calc-clients" min="1" max="200" value="25" oninput="updateCalculator()" class="w-full accent-yellow-400">
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-sm font-semibold mb-2">
+                            <span class="text-gray-300">Price Per Client / Sale ($):</span>
+                            <span id="calc-val-price" class="text-yellow-400 font-bold">$150</span>
+                        </div>
+                        <input type="range" id="calc-price" min="10" max="2500" value="150" step="10" oninput="updateCalculator()" class="w-full accent-yellow-400">
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-sm font-semibold mb-2">
+                            <span class="text-gray-300">Estimated Profit Margin (%):</span>
+                            <span id="calc-val-margin" class="text-yellow-400 font-bold">75%</span>
+                        </div>
+                        <input type="range" id="calc-margin" min="10" max="95" value="75" oninput="updateCalculator()" class="w-full accent-yellow-400">
+                    </div>
+                </div>
+
+                <div class="bg-gray-950 p-6 rounded-2xl border border-gray-800 flex flex-col justify-around text-center">
+                    <div>
+                        <p class="text-xs font-bold uppercase text-gray-500 tracking-wider">Gross Monthly Revenue</p>
+                        <p id="calc-out-gross" class="text-3xl font-black text-white mt-1">$3,750</p>
+                    </div>
+                    <div class="border-t border-gray-800 pt-4">
+                        <p class="text-xs font-bold uppercase text-yellow-500/80 tracking-wider">Estimated Net Profit (Monthly)</p>
+                        <p id="calc-out-net" class="text-4xl font-extrabold gold-gradient-text mt-1">$2,812.50</p>
+                    </div>
+                    <div class="border-t border-gray-800 pt-4">
+                        <p class="text-xs font-bold uppercase text-gray-500 tracking-wider">Annual Trajectory</p>
+                        <p id="calc-out-annual" class="text-2xl font-bold text-gray-300 mt-1">$33,750 / yr</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: WORKSPACE & LEAN CANVAS -->
+        <section id="view-workspace" class="hidden space-y-8">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-white">Saved Blueprints & Strategy Workspace</h2>
+                    <p class="text-gray-400 text-sm">Your bookmarked ideas and live Lean Canvas strategy sheet.</p>
+                </div>
+                <button onclick="exportWorkspace()" class="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white text-sm font-semibold rounded-xl flex items-center gap-2 transition">
+                    <i data-lucide="download" class="w-4 h-4"></i> Export Workspace (TXT)
+                </button>
+            </div>
+
+            <!-- Saved Blueprints -->
+            <div class="glass p-6 rounded-3xl space-y-4">
+                <h3 class="text-lg font-bold text-yellow-400 flex items-center gap-2">
+                    <i data-lucide="bookmark" class="w-5 h-5"></i> Bookmarked Blueprints
+                </h3>
+                <div id="workspace-saved-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <p class="text-gray-500 text-sm italic col-span-full">No blueprints saved yet. Click the bookmark icon on any card in the Explorer tab!</p>
+                </div>
+            </div>
+
+            <!-- Interactive Lean Canvas -->
+            <div class="glass p-6 rounded-3xl space-y-6">
+                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                    <i data-lucide="layout" class="w-5 h-5 text-yellow-400"></i> Interactive 1-Page Lean Canvas
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Target Customer Segment</label>
+                        <textarea id="canvas-customers" oninput="saveCanvas()" rows="3" class="w-full bg-gray-900 border border-gray-800 rounded-xl p-3 text-white focus:outline-none focus:border-yellow-500" placeholder="e.g. Small business owners, content creators..."></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Unique Value Proposition</label>
+                        <textarea id="canvas-uvp" oninput="saveCanvas()" rows="3" class="w-full bg-gray-900 border border-gray-800 rounded-xl p-3 text-white focus:outline-none focus:border-yellow-500" placeholder="e.g. Save 10 hours a week with automated social media clips..."></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Revenue Stream</label>
+                        <textarea id="canvas-revenue" oninput="saveCanvas()" rows="3" class="w-full bg-gray-900 border border-gray-800 rounded-xl p-3 text-white focus:outline-none focus:border-yellow-500" placeholder="e.g. $499/mo retainer per client..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- DETAILED BLUEPRINT MODAL -->
+    <div id="detail-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="glass w-full max-w-2xl max-h-[90vh] rounded-3xl overflow-hidden flex flex-col shadow-2xl border border-yellow-500/20">
+            <div class="p-6 border-b border-gray-800 flex justify-between items-start">
+                <div>
+                    <span id="modal-category" class="text-xs font-bold text-yellow-400 uppercase tracking-widest">Category</span>
+                    <h3 id="modal-title" class="text-2xl font-black text-white mt-1">Title</h3>
+                </div>
+                <button onclick="closeModal()" class="p-2 hover:bg-gray-800 rounded-full text-gray-400 hover:text-white">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
             
-            <i class="fa-solid fa-vault text-4xl text-yellow-500 mb-4"></i>
-            <h2 class="text-3xl font-bold mb-3 gold-gradient-text">VIP Founder Execution Vault</h2>
-            <p class="text-gray-300 max-w-xl mx-auto text-sm mb-8">
-                Unlock instant access to exclusive digital downloads, premium financial templates, legal agreement frameworks, and private community resources.
-            </p>
+            <div class="p-6 overflow-y-auto space-y-6 custom-scrollbar text-sm">
+                <p id="modal-desc" class="text-gray-300 text-base leading-relaxed"></p>
 
-            <div class="inline-block">
-                <!-- Replace 'https://gumroad.com' with your actual Gumroad checkout URL -->
-                <a href="https://gumroad.com" target="_blank" rel="noopener noreferrer" class="gold-btn px-8 py-3 rounded-lg text-sm tracking-wider uppercase shadow-lg inline-flex items-center gap-2 transition duration-200">
-                    <i class="fa-solid fa-lock text-xs"></i> Unlock Vault Access
-                </a>
+                <div class="grid grid-cols-2 gap-4 bg-gray-950/60 p-4 rounded-xl border border-gray-800">
+                    <div>
+                        <span class="text-xs text-gray-500 uppercase font-bold">Estimated Capital</span>
+                        <p id="modal-capital" class="font-bold text-yellow-400 mt-0.5">$0</p>
+                    </div>
+                    <div>
+                        <span class="text-xs text-gray-500 uppercase font-bold">Difficulty Level</span>
+                        <p id="modal-difficulty" class="font-bold text-white mt-0.5">Beginner</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white text-base mb-2 flex items-center gap-2"><i data-lucide="shield-alert" class="w-4 h-4 text-yellow-400"></i> SWOT Overview</h4>
+                    <div class="grid grid-cols-2 gap-3 text-xs">
+                        <div class="bg-gray-900 p-3 rounded-xl"><strong class="text-green-400 block mb-1">Strengths:</strong><span id="modal-swot-s"></span></div>
+                        <div class="bg-gray-900 p-3 rounded-xl"><strong class="text-yellow-400 block mb-1">Weaknesses:</strong><span id="modal-swot-w"></span></div>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white text-base mb-2 flex items-center gap-2"><i data-lucide="check-square" class="w-4 h-4 text-yellow-400"></i> 30-Day Launch Roadmap</h4>
+                    <ul id="modal-roadmap" class="space-y-2 text-gray-300"></ul>
+                </div>
+            </div>
+
+            <div class="p-4 border-t border-gray-800 bg-gray-950 flex justify-end gap-3">
+                <button id="modal-bookmark-btn" class="gold-btn px-6 py-2.5 rounded-xl font-bold text-xs uppercase">Bookmark Blueprint</button>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Footer -->
-    <footer class="border-t border-gray-800 py-8 text-center text-xs text-gray-500">
-        <p>&copy; 2026 Divitiae Hub powered by IdeaSparks. All rights reserved.</p>
+    <!-- FOOTER -->
+    <footer class="border-t border-gray-800 py-6 text-center text-xs text-gray-500">
+        <p>&copy; 2026 Divitiae Hub powered by IdeaSparks. Built for ambitious founders.</p>
     </footer>
 
+    <!-- APP SCRIPT & DATA -->
+    <script>
+        const blueprints = [
+            {
+                id: 'ai-agency',
+                title: 'AI Content & Short-Form Automation Agency',
+                category: 'AI & Digital Services',
+                budgetCategory: 'low',
+                capital: '$100 - $300',
+                difficulty: 'Beginner - Intermediate',
+                summary: 'Help brands, real estate agents, and creators re-purpose long videos into viral TikToks and Instagram Reels using AI tools.',
+                swotS: 'High demand, recurring monthly retainers ($500-$2,000/mo per client).',
+                swotW: 'Fast-moving market requiring continuous learning of new AI video tools.',
+                roadmap: [
+                    'Days 1-7: Master OpusClip, CapCut, and ElevenLabs workflows.',
+                    'Days 8-15: Create 3 portfolio sample reels using public podcast clips.',
+                    'Days 16-22: Direct message 30 creators/brands on Instagram & TikTok daily with video audits.',
+                    'Days 23-30: Close first 2 monthly retainer clients.'
+                ]
+            },
+            {
+                id: 'micro-saas-templates',
+                title: 'Notion & Digital Workspace Template Shop',
+                category: 'E-Commerce & Products',
+                budgetCategory: 'low',
+                capital: '$50 - $150',
+                difficulty: 'Beginner',
+                summary: 'Design and sell high-aesthetic digital productivity planners and business tracking dashboards on Gumroad & Etsy.',
+                swotS: '100% profit margins, automated digital product delivery.',
+                swotW: 'Requires organic traffic generation through social media platforms.',
+                roadmap: [
+                    'Days 1-7: Research trending Notion setups on Pinterest and TikTok.',
+                    'Days 8-15: Build 2 premium dashboards (e.g. Creator OS, Budget Tracker).',
+                    'Days 16-22: Connect Gumroad account & list products.',
+                    'Days 23-30: Post daily 15-second aesthetic showcase videos on Instagram Reels.'
+                ]
+            },
+            {
+                id: 'b2b-cold-email',
+                title: 'B2B Lead Generation & Outreach Partner',
+                category: 'B2B & High-Ticket Services',
+                budgetCategory: 'medium',
+                capital: '$500 - $1,000',
+                difficulty: 'Intermediate',
+                summary: 'Set up automated cold email infrastructure and deliver qualified sales calls to local B2B service companies.',
+                swotS: 'High-ticket deals ($1,500/month + pay-per-meeting bonus).',
+                swotW: 'Requires technical domain setup and deliverability warmups.',
+                roadmap: [
+                    'Days 1-7: Purchase secondary domains and warmup mailboxes via Instantly.',
+                    'Days 8-15: Scrape targeted leads using Apollo.io.',
+                    'Days 16-22: Write personalized 3-step email campaign sequences.',
+                    'Days 23-30: Launch outreach and book first sales discovery calls.'
+                ]
+            },
+            {
+                id: 'faceless-youtube',
+                title: 'Faceless Educational YouTube Brand',
+                category: 'Content & Creator Economy',
+                budgetCategory: 'medium',
+                capital: '$300 - $800',
+                difficulty: 'Beginner',
+                summary: 'Create documentary or finance-style YouTube channels using AI voiceovers, stock footage, and engaging scriptwriting.',
+                swotS: 'Long-term passive ad revenue and affiliate monetization.',
+                swotW: 'Takes 3-6 months to reach YouTube partner program monetization limits.',
+                roadmap: [
+                    'Days 1-7: Pick high RPM niche (Finance, Tech, Luxury, History).',
+                    'Days 8-15: Script first 4 long-form video scripts using Claude/ChatGPT.',
+                    'Days 16-22: Edit videos using CapCut Desktop & stock libraries.',
+                    'Days 23-30: Upload consistently twice a week with high-CTR thumbnails.'
+                ]
+            }
+        ];
+
+        let savedIds = JSON.parse(localStorage.getItem('divitiae_saved') || '[]');
+
+        function init() {
+            renderIdeas(blueprints);
+            updateSavedBadge();
+            loadCanvas();
+            lucide.createIcons();
+        }
+
+        function renderIdeas(list) {
+            const grid = document.getElementById('ideas-grid');
+            grid.innerHTML = '';
+            
+            if(list.length === 0) {
+                grid.innerHTML = `<p class="text-gray-500 text-center col-span-full py-12">No blueprints found matching your search.</p>`;
+                return;
+            }
+
+            list.forEach(item => {
+                const isSaved = savedIds.includes(item.id);
+                const card = document.createElement('div');
+                card.className = 'glass p-6 rounded-2xl flex flex-col justify-between border border-gray-800 hover:border-yellow-500/50 transition group';
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="text-[10px] font-bold text-yellow-400 uppercase tracking-widest px-2.5 py-1 rounded-md bg-yellow-400/10 border border-yellow-400/20">${item.category}</span>
+                            <button onclick="toggleSave('${item.id}', event)" class="text-gray-500 hover:text-yellow-400 transition">
+                                <i data-lucide="bookmark" class="w-5 h-5 ${isSaved ? 'text-yellow-400 fill-yellow-400' : ''}"></i>
+                            </button>
+                        </div>
+                        <h3 class="text-lg font-bold text-white group-hover:text-yellow-400 transition mb-2">${item.title}</h3>
+                        <p class="text-gray-400 text-xs leading-relaxed mb-4">${item.summary}</p>
+                    </div>
+                    <div class="border-t border-gray-800 pt-4 flex justify-between items-center text-xs">
+                        <span class="text-gray-400"><strong class="text-white">${item.capital}</strong> startup</span>
+                        <button onclick="openModal('${item.id}')" class="font-bold text-yellow-400 hover:underline flex items-center gap-1">
+                            Blueprint <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        function filterIdeas() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const cat = document.getElementById('category-filter').value;
+            const budget = document.getElementById('budget-filter').value;
+
+            const filtered = blueprints.filter(b => {
+                const matchQ = b.title.toLowerCase().includes(query) || b.summary.toLowerCase().includes(query);
+                const matchC = cat === 'all' || b.category === cat;
+                const matchB = budget === 'all' || b.budgetCategory === budget;
+                return matchQ && matchC && matchB;
+            });
+
+            renderIdeas(filtered);
+        }
+
+        function switchTab(tab) {
+            ['explorer', 'quiz', 'calculator', 'workspace'].forEach(t => {
+                document.getElementById(`view-${t}`).classList.add('hidden');
+                const btn = document.getElementById(`tab-${t}`);
+                btn.className = 'px-5 py-2 rounded-full text-sm font-semibold transition text-gray-400 hover:text-white';
+            });
+
+            document.getElementById(`view-${tab}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-${tab}`);
+            activeBtn.className = 'px-5 py-2 rounded-full text-sm font-semibold transition bg-yellow-500 text-black shadow-lg';
+
+            if(tab === 'workspace') renderWorkspace();
+        }
+
+        function openModal(id) {
+            const item = blueprints.find(b => b.id === id);
+            if(!item) return;
+
+            document.getElementById('modal-title').innerText = item.title;
+            document.getElementById('modal-category').innerText = item.category;
+            document.getElementById('modal-desc').innerText = item.summary;
+            document.getElementById('modal-capital').innerText = item.capital;
+            document.getElementById('modal-difficulty').innerText = item.difficulty;
+            document.getElementById('modal-swot-s').innerText = item.swotS;
+            document.getElementById('modal-swot-w').innerText = item.swotW;
+
+            const rList = document.getElementById('modal-roadmap');
+            rList.innerHTML = item.roadmap.map(step => `<li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-yellow-400 mt-0.5 shrink-0"></i><span>${step}</span></li>`).join('');
+
+            const btn = document.getElementById('modal-bookmark-btn');
+            btn.onclick = () => { toggleSave(item.id); closeModal(); };
+
+            document.getElementById('detail-modal').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function closeModal() {
+            document.getElementById('detail-modal').classList.add('hidden');
+        }
+
+        function toggleSave(id, event) {
+            if(event) event.stopPropagation();
+            if(savedIds.includes(id)) {
+                savedIds = savedIds.filter(i => i !== id);
+            } else {
+                savedIds.push(id);
+            }
+            localStorage.setItem('divitiae_saved', JSON.stringify(savedIds));
+            updateSavedBadge();
+            filterIdeas();
+            renderWorkspace();
+        }
+
+        function updateSavedBadge() {
+            const badge = document.getElementById('saved-badge');
+            if(savedIds.length > 0) {
+                badge.innerText = savedIds.length;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        function triggerSurprise() {
+            const random = blueprints[Math.floor(Math.random() * blueprints.length)];
+            openModal(random.id);
+        }
+
+        function updateCalculator() {
+            const clients = parseInt(document.getElementById('calc-clients').value);
+            const price = parseInt(document.getElementById('calc-price').value);
+            const margin = parseInt(document.getElementById('calc-margin').value);
+
+            document.getElementById('calc-val-clients').innerText = clients;
+            document.getElementById('calc-val-price').innerText = `$${price}`;
+            document.getElementById('calc-val-margin').innerText = `${margin}%`;
+
+            const gross = clients * price;
+            const net = gross * (margin / 100);
+            const annual = net * 12;
+
+            document.getElementById('calc-out-gross').innerText = `$${gross.toLocaleString()}`;
+            document.getElementById('calc-out-net').innerText = `$${net.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            document.getElementById('calc-out-annual').innerText = `$${annual.toLocaleString()} / yr`;
+        }
+
+        function runQuiz() {
+            const budget = document.getElementById('quiz-budget').value;
+            const niche = document.getElementById('quiz-niche').value;
+
+            const matches = blueprints.filter(b => b.budgetCategory === budget || b.category === niche);
+            const list = document.getElementById('quiz-matches-list');
+            list.innerHTML = '';
+
+            matches.slice(0, 3).forEach(m => {
+                list.innerHTML += `
+                    <div class="bg-gray-900 p-4 rounded-xl flex justify-between items-center border border-gray-800">
+                        <div>
+                            <h4 class="font-bold text-white text-sm">${m.title}</h4>
+                            <p class="text-xs text-gray-400">${m.category} • ${m.capital}</p>
+                        </div>
+                        <button onclick="openModal('${m.id}')" class="text-xs gold-btn px-3 py-1.5 rounded-lg">View</button>
+                    </div>
+                `;
+            });
+
+            document.getElementById('quiz-results').classList.remove('hidden');
+        }
+
+        function renderWorkspace() {
+            const list = document.getElementById('workspace-saved-list');
+            list.innerHTML = '';
+            
+            const savedItems = blueprints.filter(b => savedIds.includes(b.id));
+
+            if(savedItems.length === 0) {
+                list.innerHTML = `<p class="text-gray-500 text-sm italic col-span-full">No blueprints saved yet. Click the bookmark icon on any card in the Explorer tab!</p>`;
+                return;
+            }
+
+            savedItems.forEach(item => {
+                list.innerHTML += `
+                    <div class="bg-gray-950 p-4 rounded-xl border border-gray-800 flex justify-between items-center">
+                        <div>
+                            <h4 class="font-bold text-white text-sm">${item.title}</h4>
+                            <p class="text-xs text-yellow-400">${item.capital}</p>
+                        </div>
+                        <button onclick="openModal('${item.id}')" class="text-xs text-gray-400 hover:text-white">View</button>
+                    </div>
+                `;
+            });
+        }
+
+        function saveCanvas() {
+            const canvasData = {
+                customers: document.getElementById('canvas-customers').value,
+                uvp: document.getElementById('canvas-uvp').value,
+                revenue: document.getElementById('canvas-revenue').value
+            };
+            localStorage.setItem('divitiae_canvas', JSON.stringify(canvasData));
+        }
+
+        function loadCanvas() {
+            const data = JSON.parse(localStorage.getItem('divitiae_canvas') || '{}');
+            if(data.customers) document.getElementById('canvas-customers').value = data.customers;
+            if(data.uvp) document.getElementById('canvas-uvp').value = data.uvp;
+            if(data.revenue) document.getElementById('canvas-revenue').value = data.revenue;
+        }
+
+        function exportWorkspace() {
+            const savedItems = blueprints.filter(b => savedIds.includes(b.id)).map(b => `- ${b.title} (${b.capital})`).join('\n');
+            const data = JSON.parse(localStorage.getItem('divitiae_canvas') || '{}');
+
+            const content = `=== DIVITIAE HUB WORKSPACE EXPORT ===\n\nBOOKMARKED BLUEPRINTS:\n${savedItems || 'None'}\n\n1-PAGE LEAN CANVAS:\nTarget Customers: ${data.customers || 'N/A'}\nUnique Value Prop: ${data.uvp || 'N/A'}\nRevenue Stream: ${data.revenue || 'N/A'}\n`;
+
+            const blob = new Blob([content], { type: 'text/plain' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'Divitiae_Hub_Workspace.txt';
+            a.click();
+        }
+
+        window.onload = init;
+    </script>
 </body>
 </html>
