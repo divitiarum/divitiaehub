@@ -1,1631 +1,434 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IdeaSpark - Business Idea Generator & Launch Workspace</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50: '#f0f7ff',
-                            100: '#e0effe',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                        },
-                        spark: {
-                            400: '#f59e0b',
-                            500: '#d97706',
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Divitiae Hub | Powered by IdeaSpark</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            gold: {
+              400: '#FBBF24',
+              500: '#F59E0B',
+              600: '#D97706',
+              700: '#B45309',
             }
+          }
         }
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .glass {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-        .dark .glass {
-            background: rgba(17, 24, 39, 0.75);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .sparkle-anim {
-            animation: pulse-glow 2s infinite alternate;
-        }
-        @keyframes pulse-glow {
-            0% { box-shadow: 0 0 10px rgba(59, 130, 246, 0.3); }
-            100% { box-shadow: 0 0 25px rgba(245, 158, 11, 0.6); }
-        }
-    </style>
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .gold-gradient { background: linear-gradient(135deg, #F59E0B 0%, #B45309 100%); }
+    .gold-text { background: linear-gradient(135deg, #FCD34D 0%, #F59E0B 50%, #D97706 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  </style>
 </head>
-<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-full flex flex-col transition-colors duration-200">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-slate-950">
 
-    <!-- Header Navigation -->
-    <header class="sticky top-0 z-40 w-full glass border-b border-slate-200 dark:border-slate-800 transition-colors">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
-            <!-- Brand Logo -->
-            <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('explore')">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-spark-400 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
-                    <i data-lucide="zap" class="w-6 h-6 fill-current"></i>
-                </div>
-                <div>
-                    <span class="text-xl font-bold bg-gradient-to-r from-brand-600 via-blue-500 to-spark-500 bg-clip-text text-transparent">IdeaSpark</span>
-                    <span class="hidden sm:inline-block text-xs font-semibold px-2 py-0.5 ml-2 bg-brand-100 dark:bg-brand-900/50 text-brand-700 dark:text-brand-300 rounded-full">Pro Workspace</span>
-                </div>
-            </div>
-
-            <!-- Navigation Tabs -->
-            <nav class="hidden md:flex items-center gap-1 bg-slate-200/60 dark:bg-slate-800/60 p-1 rounded-xl">
-                <button onclick="switchTab('explore')" id="tab-explore" class="tab-btn px-4 py-2 text-sm font-medium rounded-lg transition-all flex items-center gap-2 bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm">
-                    <i data-lucide="compass" class="w-4 h-4"></i> Explore Ideas
-                </button>
-                <button onclick="switchTab('quiz')" id="tab-quiz" class="tab-btn px-4 py-2 text-sm font-medium rounded-lg transition-all flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
-                    <i data-lucide="sparkles" class="w-4 h-4"></i> Match Quiz
-                </button>
-                <button onclick="switchTab('saved')" id="tab-saved" class="tab-btn px-4 py-2 text-sm font-medium rounded-lg transition-all flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white relative">
-                    <i data-lucide="bookmark" class="w-4 h-4"></i> Saved Workspace
-                    <span id="saved-badge" class="hidden ml-1 px-1.5 py-0.2 text-xs rounded-full bg-brand-600 text-white font-bold">0</span>
-                </button>
-            </nav>
-
-            <!-- Actions Right -->
-            <div class="flex items-center gap-2">
-                <button id="theme-toggle" onclick="toggleDarkMode()" class="p-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors" title="Toggle Theme">
-                    <i data-lucide="moon" class="w-5 h-5 dark:hidden"></i>
-                    <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
-                </button>
-                <button onclick="triggerSurpriseIdea()" class="sparkle-anim hidden sm:flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-brand-600 to-spark-500 text-white font-medium text-sm rounded-xl hover:opacity-90 transition-all shadow-md">
-                    <i data-lucide="dices" class="w-4 h-4"></i> Surprise Me!
-                </button>
-            </div>
+  <!-- Header / Navigation -->
+  <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50 px-6 py-4">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl gold-gradient flex items-center justify-center font-extrabold text-slate-950 text-xl shadow-lg shadow-amber-500/20">
+          D
         </div>
-
-        <!-- Mobile Nav Bar (Bottom View Bar) -->
-        <div class="md:hidden flex border-t border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 px-2 py-1 justify-around text-xs">
-            <button onclick="switchTab('explore')" id="mob-tab-explore" class="flex flex-col items-center py-1.5 px-3 text-brand-600 font-semibold">
-                <i data-lucide="compass" class="w-5 h-5 mb-0.5"></i> Explore
-            </button>
-            <button onclick="switchTab('quiz')" id="mob-tab-quiz" class="flex flex-col items-center py-1.5 px-3 text-slate-500">
-                <i data-lucide="sparkles" class="w-5 h-5 mb-0.5"></i> Match Quiz
-            </button>
-            <button onclick="switchTab('saved')" id="mob-tab-saved" class="flex flex-col items-center py-1.5 px-3 text-slate-500">
-                <i data-lucide="bookmark" class="w-5 h-5 mb-0.5"></i> Workspace
-            </button>
+        <div>
+          <span class="text-xl font-black tracking-wider text-white">DIVITIAE HUB</span>
+          <span class="hidden sm:inline-block text-[10px] font-extrabold uppercase tracking-widest text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20 ml-2">
+            Powered by IdeaSpark
+          </span>
         </div>
-    </header>
+      </div>
 
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div class="flex items-center gap-4">
+        <a href="https://instagram.com/billionairestogether" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-xs sm:text-sm font-semibold bg-slate-900 hover:bg-slate-800 text-amber-400 px-4 py-2 rounded-xl border border-amber-500/30 transition shadow-md">
+          <i data-lucide="instagram" class="w-4 h-4 text-amber-400"></i>
+          <span>@billionairestogether</span>
+        </a>
+      </div>
+    </div>
+  </header>
 
-        <!-- ================= EXPLORE TAB ================= -->
-        <section id="view-explore" class="space-y-6">
-            <!-- Hero Banner -->
-            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-brand-950 to-slate-900 text-white p-8 sm:p-10 border border-slate-800 shadow-2xl">
-                <div class="relative z-10 max-w-2xl space-y-4">
-                    <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-brand-500/20 text-brand-300 border border-brand-500/30">
-                        <i data-lucide="rocket" class="w-3.5 h-3.5"></i> Launch-Ready Business Blueprints
-                    </span>
-                    <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
-                        Turn Curiosity into a <span class="bg-gradient-to-r from-brand-400 to-spark-400 bg-clip-text text-transparent">Profitable Empire</span>
-                    </h1>
-                    <p class="text-slate-300 text-base sm:text-lg font-normal">
-                        Browse 20+ vetted business ideas complete with 30-day launch checklists, Lean Canvas breakdowns, and real-time revenue calculators.
-                    </p>
-                    <div class="pt-2 flex flex-wrap gap-3">
-                        <button onclick="switchTab('quiz')" class="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-semibold text-sm transition-all shadow-lg shadow-brand-600/30 flex items-center gap-2">
-                            Take Match Quiz <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                        </button>
-                        <button onclick="triggerSurpriseIdea()" class="sm:hidden px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-sm border border-slate-700 flex items-center gap-2">
-                            <i data-lucide="dices" class="w-4 h-4"></i> Random Idea
-                        </button>
-                    </div>
-                </div>
-                <div class="absolute -right-12 -bottom-12 w-80 h-80 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
-                <div class="absolute right-1/4 -top-12 w-64 h-64 bg-spark-500/10 rounded-full blur-3xl pointer-events-none"></div>
-            </div>
-
-            <!-- Filter & Search Control Panel -->
-            <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-                <div class="flex flex-col md:flex-row gap-4 justify-between items-center">
-                    <!-- Search Input -->
-                    <div class="relative w-full md:w-96">
-                        <i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
-                        <input type="text" id="search-input" placeholder="Search by title, keyword, tech, passion..." oninput="applyFilters()" class="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all">
-                    </div>
-
-                    <!-- Category Chips -->
-                    <div class="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-1 md:pb-0 hide-scrollbar" id="category-chips">
-                        <!-- Populated by JavaScript -->
-                    </div>
-                </div>
-
-                <!-- Dropdown Selectors -->
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 pt-2 border-t border-slate-100 dark:border-slate-800">
-                    <div>
-                        <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Investment</label>
-                        <select id="filter-budget" onchange="applyFilters()" class="w-full text-xs sm:text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 font-medium focus:outline-none focus:ring-2 focus:ring-brand-500">
-                            <option value="all">All Budgets</option>
-                            <option value="low">Low (&lt; $500)</option>
-                            <option value="medium">Medium ($500 - $5,000)</option>
-                            <option value="high">High ($5,000+)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Time Commitment</label>
-                        <select id="filter-time" onchange="applyFilters()" class="w-full text-xs sm:text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 font-medium focus:outline-none focus:ring-2 focus:ring-brand-500">
-                            <option value="all">All Commitments</option>
-                            <option value="Side Hustle">Side Hustle (&lt;15 hrs/wk)</option>
-                            <option value="Full Time">Full Time (30+ hrs/wk)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Skill Level</label>
-                        <select id="filter-skill" onchange="applyFilters()" class="w-full text-xs sm:text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 font-medium focus:outline-none focus:ring-2 focus:ring-brand-500">
-                            <option value="all">All Skill Levels</option>
-                            <option value="Beginner">Beginner</option>
-                            <option value="Intermediate">Intermediate</option>
-                            <option value="Advanced">Advanced</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Sort By</label>
-                        <select id="filter-sort" onchange="applyFilters()" class="w-full text-xs sm:text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 font-medium focus:outline-none focus:ring-2 focus:ring-brand-500">
-                            <option value="popular">Most Popular</option>
-                            <option value="cost-low">Startup Cost: Low to High</option>
-                            <option value="cost-high">Startup Cost: High to Low</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Active Filter Stats / Counter -->
-            <div class="flex justify-between items-center px-1 text-xs text-slate-500 dark:text-slate-400">
-                <span>Showing <span id="ideas-count" class="font-bold text-slate-800 dark:text-slate-200">0</span> business blueprints</span>
-                <button onclick="resetFilters()" class="text-brand-600 dark:text-brand-400 hover:underline font-medium">Reset Filters</button>
-            </div>
-
-            <!-- Idea Cards Grid -->
-            <div id="ideas-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Dynamic Content Rendered Here -->
-            </div>
-        </section>
-
-        <!-- ================= MATCH QUIZ TAB ================= -->
-        <section id="view-quiz" class="hidden space-y-6 max-w-3xl mx-auto">
-            <div class="text-center space-y-2 py-4">
-                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-spark-400/10 text-spark-500 border border-spark-500/20">
-                    Smart Recommendation Engine
-                </span>
-                <h2 class="text-3xl font-extrabold">Find Your Ideal Business Match</h2>
-                <p class="text-slate-500 dark:text-slate-400 text-sm">Answer 4 quick questions to get custom AI-style business recommendations tailored to your goals and lifestyle.</p>
-            </div>
-
-            <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xl space-y-8">
-                <!-- Step 1: Budget -->
-                <div class="space-y-3">
-                    <label class="block font-semibold text-sm sm:text-base flex items-center gap-2">
-                        <span class="w-6 h-6 rounded-full bg-brand-100 dark:bg-brand-900 text-brand-600 dark:text-brand-300 text-xs flex items-center justify-center font-bold">1</span>
-                        What is your initial startup budget?
-                    </label>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" id="quiz-budget-options">
-                        <button type="button" data-val="low" onclick="selectQuizOption('budget', 'low', this)" class="quiz-btn p-4 rounded-xl border border-slate-200 dark:border-slate-800 text-left hover:border-brand-500 transition-all flex flex-col justify-between">
-                            <i data-lucide="piggy-bank" class="w-6 h-6 text-brand-500 mb-2"></i>
-                            <div>
-                                <div class="font-bold text-sm">Under $500</div>
-                                <div class="text-xs text-slate-500">Low risk, digital or service focus</div>
-                            </div>
-                        </button>
-                        <button type="button" data-val="medium" onclick="selectQuizOption('budget', 'medium', this)" class="quiz-btn p-4 rounded-xl border border-slate-200 dark:border-slate-800 text-left hover:border-brand-500 transition-all flex flex-col justify-between">
-                            <i data-lucide="wallet" class="w-6 h-6 text-brand-500 mb-2"></i>
-                            <div>
-                                <div class="font-bold text-sm">$500 – $5,000</div>
-                                <div class="text-xs text-slate-500">Software tools, inventory, marketing</div>
-                            </div>
-                        </button>
-                        <button type="button" data-val="high" onclick="selectQuizOption('budget', 'high', this)" class="quiz-btn p-4 rounded-xl border border-slate-200 dark:border-slate-800 text-left hover:border-brand-500 transition-all flex flex-col justify-between">
-                            <i data-lucide="landmark" class="w-6 h-6 text-brand-500 mb-2"></i>
-                            <div>
-                                <div class="font-bold text-sm">$5,000+</div>
-                                <div class="text-xs text-slate-500">Custom software, machinery, agencies</div>
-                            </div>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Step 2: Time -->
-                <div class="space-y-3">
-                    <label class="block font-semibold text-sm sm:text-base flex items-center gap-2">
-                        <span class="w-6 h-6 rounded-full bg-brand-100 dark:bg-brand-900 text-brand-600 dark:text-brand-300 text-xs flex items-center justify-center font-bold">2</span>
-                        How much time can you commit per week?
-                    </label>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="quiz-time-options">
-                        <button type="button" data-val="Side Hustle" onclick="selectQuizOption('time', 'Side Hustle', this)" class="quiz-btn p-4 rounded-xl border border-slate-200 dark:border-slate-800 text-left hover:border-brand-500 transition-all flex items-center gap-3">
-                            <i data-lucide="clock" class="w-6 h-6 text-brand-500 shrink-0"></i>
-                            <div>
-                                <div class="font-bold text-sm">Side Hustle (5–15 hrs/wk)</div>
-                                <div class="text-xs text-slate-500">Keep your full-time job while building</div>
-                            </div>
-                        </button>
-                        <button type="button" data-val="Full Time" onclick="selectQuizOption('time', 'Full Time', this)" class="quiz-btn p-4 rounded-xl border border-slate-200 dark:border-slate-800 text-left hover:border-brand-500 transition-all flex items-center gap-3">
-                            <i data-lucide="briefcase" class="w-6 h-6 text-brand-500 shrink-0"></i>
-                            <div>
-                                <div class="font-bold text-sm">Full Time (30+ hrs/wk)</div>
-                                <div class="text-xs text-slate-500">Go all-in on rapid business growth</div>
-                            </div>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Step 3: Skill -->
-                <div class="space-y-3">
-                    <label class="block font-semibold text-sm sm:text-base flex items-center gap-2">
-                        <span class="w-6 h-6 rounded-full bg-brand-100 dark:bg-brand-900 text-brand-600 dark:text-brand-300 text-xs flex items-center justify-center font-bold">3</span>
-                        What is your level of technical/business experience?
-                    </label>
-                    <div class="grid grid-cols-3 gap-3" id="quiz-skill-options">
-                        <button type="button" data-val="Beginner" onclick="selectQuizOption('skill', 'Beginner', this)" class="quiz-btn p-3 rounded-xl border border-slate-200 dark:border-slate-800 text-center hover:border-brand-500 transition-all">
-                            <div class="font-bold text-sm">Beginner</div>
-                            <div class="text-[10px] text-slate-500">No coding/biz skills</div>
-                        </button>
-                        <button type="button" data-val="Intermediate" onclick="selectQuizOption('skill', 'Intermediate', this)" class="quiz-btn p-3 rounded-xl border border-slate-200 dark:border-slate-800 text-center hover:border-brand-500 transition-all">
-                            <div class="font-bold text-sm">Intermediate</div>
-                            <div class="text-[10px] text-slate-500">No-code, marketing</div>
-                        </button>
-                        <button type="button" data-val="Advanced" onclick="selectQuizOption('skill', 'Advanced', this)" class="quiz-btn p-3 rounded-xl border border-slate-200 dark:border-slate-800 text-center hover:border-brand-500 transition-all">
-                            <div class="font-bold text-sm">Advanced</div>
-                            <div class="text-[10px] text-slate-500">Code, ops, domain expert</div>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Step 4: Interests -->
-                <div class="space-y-3">
-                    <label class="block font-semibold text-sm sm:text-base flex items-center gap-2">
-                        <span class="w-6 h-6 rounded-full bg-brand-100 dark:bg-brand-900 text-brand-600 dark:text-brand-300 text-xs flex items-center justify-center font-bold">4</span>
-                        Which domains excite you most? (Select all that apply)
-                    </label>
-                    <div class="flex flex-wrap gap-2" id="quiz-interest-options">
-                        <!-- Populated by JS -->
-                    </div>
-                </div>
-
-                <button onclick="calculateQuizMatches()" class="w-full py-3.5 bg-gradient-to-r from-brand-600 to-spark-500 text-white font-bold rounded-xl shadow-lg hover:opacity-95 transition-all text-base flex items-center justify-center gap-2">
-                    <i data-lucide="sparkles" class="w-5 h-5"></i> Generate My Matches
-                </button>
-            </div>
-
-            <!-- Quiz Results Output Container -->
-            <div id="quiz-results" class="hidden space-y-4 pt-4">
-                <h3 class="text-xl font-bold flex items-center gap-2">
-                    <i data-lucide="award" class="w-6 h-6 text-spark-500"></i> Your Top 3 Matched Business Blueprints
-                </h3>
-                <div id="quiz-results-cards" class="grid grid-cols-1 gap-4">
-                    <!-- Populated dynamically -->
-                </div>
-            </div>
-        </section>
-
-        <!-- ================= SAVED WORKSPACE & LEAN CANVAS TAB ================= -->
-        <section id="view-saved" class="hidden space-y-6">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
-                <div>
-                    <h2 class="text-2xl font-extrabold">My Saved Workspace & Lean Canvas</h2>
-                    <p class="text-sm text-slate-500 dark:text-slate-400">Review bookmarked ideas, craft Lean Canvases, and export your launch plans.</p>
-                </div>
-                <div class="flex items-center gap-2">
-                    <button onclick="exportSavedIdeas('json')" class="px-3.5 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-700 transition-colors flex items-center gap-1.5">
-                        <i data-lucide="download" class="w-4 h-4"></i> Export JSON
-                    </button>
-                    <button onclick="exportSavedIdeas('txt')" class="px-3.5 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-700 transition-colors flex items-center gap-1.5">
-                        <i data-lucide="file-text" class="w-4 h-4"></i> Export Text
-                    </button>
-                </div>
-            </div>
-
-            <div id="saved-empty-state" class="hidden text-center py-16 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-4">
-                <div class="w-16 h-16 bg-brand-50 dark:bg-brand-950 text-brand-500 rounded-2xl flex items-center justify-center mx-auto">
-                    <i data-lucide="bookmark-plus" class="w-8 h-8"></i>
-                </div>
-                <h3 class="text-lg font-bold">No saved business ideas yet</h3>
-                <p class="text-slate-500 dark:text-slate-400 text-sm max-w-md mx-auto">Explore the ideas database and click the bookmark icon on any card to save it to your workspace.</p>
-                <button onclick="switchTab('explore')" class="px-5 py-2.5 bg-brand-600 text-white rounded-xl font-medium text-sm hover:bg-brand-500 transition-all">
-                    Explore Blueprints
-                </button>
-            </div>
-
-            <!-- Saved Workspace Main Split View -->
-            <div id="saved-workspace-content" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <!-- Left Column: Saved Cards List -->
-                <div class="lg:col-span-4 space-y-3" id="saved-list">
-                    <!-- Populated dynamically -->
-                </div>
-
-                <!-- Right Column: Interactive Lean Canvas -->
-                <div class="lg:col-span-8 bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6" id="canvas-container">
-                    <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-4">
-                        <div>
-                            <span class="text-xs font-semibold uppercase tracking-wider text-brand-600 dark:text-brand-400">1-Page Strategic Business Model</span>
-                            <h3 id="canvas-title" class="text-xl font-bold">Select an idea to edit canvas</h3>
-                        </div>
-                        <button onclick="saveCanvasNotes()" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold rounded-xl transition-all shadow flex items-center gap-1.5">
-                            <i data-lucide="save" class="w-4 h-4"></i> Save Canvas
-                        </button>
-                    </div>
-
-                    <!-- 1-Page Lean Canvas Grid -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-                        <!-- Problem -->
-                        <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700/60 space-y-2">
-                            <label class="font-bold flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
-                                <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-500"></i> Top 3 Problems
-                            </label>
-                            <textarea id="canvas-problem" rows="4" class="w-full p-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-xs focus:ring-1 focus:ring-brand-500 outline-none" placeholder="1. Problem A&#10;2. Problem B&#10;3. Existing Workarounds"></textarea>
-                        </div>
-
-                        <!-- Solution -->
-                        <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700/60 space-y-2">
-                            <label class="font-bold flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
-                                <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i> Solution Features
-                            </label>
-                            <textarea id="canvas-solution" rows="4" class="w-full p-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-xs focus:ring-1 focus:ring-brand-500 outline-none" placeholder="Core features addressing top problems..."></textarea>
-                        </div>
-
-                        <!-- Unique Value Proposition -->
-                        <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700/60 space-y-2">
-                            <label class="font-bold flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
-                                <i data-lucide="sparkles" class="w-4 h-4 text-spark-500"></i> Value Proposition
-                            </label>
-                            <textarea id="canvas-uvp" rows="4" class="w-full p-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-xs focus:ring-1 focus:ring-brand-500 outline-none" placeholder="Single, clear compelling message on why you are different..."></textarea>
-                        </div>
-
-                        <!-- Channels -->
-                        <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700/60 space-y-2">
-                            <label class="font-bold flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
-                                <i data-lucide="share-2" class="w-4 h-4 text-blue-500"></i> Customer Channels
-                            </label>
-                            <textarea id="canvas-channels" rows="4" class="w-full p-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-xs focus:ring-1 focus:ring-brand-500 outline-none" placeholder="Cold email, SEO, ProductHunt, LinkedIn outreach..."></textarea>
-                        </div>
-
-                        <!-- Revenue Streams -->
-                        <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700/60 space-y-2">
-                            <label class="font-bold flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
-                                <i data-lucide="dollar-sign" class="w-4 h-4 text-emerald-500"></i> Revenue Model
-                            </label>
-                            <textarea id="canvas-revenue" rows="4" class="w-full p-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-xs focus:ring-1 focus:ring-brand-500 outline-none" placeholder="Monthly Subscriptions, Retainers, One-time sales..."></textarea>
-                        </div>
-
-                        <!-- Cost Structure -->
-                        <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700/60 space-y-2">
-                            <label class="font-bold flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
-                                <i data-lucide="calculator" class="w-4 h-4 text-indigo-500"></i> Key Costs
-                            </label>
-                            <textarea id="canvas-costs" rows="4" class="w-full p-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-xs focus:ring-1 focus:ring-brand-500 outline-none" placeholder="Hosting, domain, API fees, ads, freelancer costs..."></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- MODAL: Idea Full Breakdown, Roadmap & Calculator -->
-    <div id="idea-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative my-8">
-            <!-- Modal Header -->
-            <div class="sticky top-0 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 p-6 flex justify-between items-start z-10">
-                <div class="space-y-1 pr-6">
-                    <div class="flex items-center gap-2">
-                        <span id="modal-category" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-brand-100 dark:bg-brand-900/60 text-brand-700 dark:text-brand-300"></span>
-                        <span id="modal-cost-badge" class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300"></span>
-                    </div>
-                    <h2 id="modal-title" class="text-2xl font-black"></h2>
-                    <p id="modal-tagline" class="text-sm text-slate-500 dark:text-slate-400"></p>
-                </div>
-                <button onclick="closeModal()" class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-                    <i data-lucide="x" class="w-6 h-6"></i>
-                </button>
-            </div>
-
-            <!-- Modal Content Body -->
-            <div class="p-6 space-y-8">
-                <!-- Overview Grid -->
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-slate-700/60">
-                    <div>
-                        <span class="text-xs text-slate-500 block">Startup Cost</span>
-                        <span id="modal-cost" class="font-bold text-sm"></span>
-                    </div>
-                    <div>
-                        <span class="text-xs text-slate-500 block">Time Commitment</span>
-                        <span id="modal-time" class="font-bold text-sm"></span>
-                    </div>
-                    <div>
-                        <span class="text-xs text-slate-500 block">Target Audience</span>
-                        <span id="modal-audience" class="font-bold text-sm"></span>
-                    </div>
-                    <div>
-                        <span class="text-xs text-slate-500 block">Skill Level</span>
-                        <span id="modal-skill" class="font-bold text-sm"></span>
-                    </div>
-                </div>
-
-                <!-- Pitch Summary -->
-                <div class="space-y-2">
-                    <h3 class="text-lg font-bold flex items-center gap-2">
-                        <i data-lucide="lightbulb" class="w-5 h-5 text-spark-500"></i> Executive Pitch Summary
-                    </h3>
-                    <p id="modal-pitch" class="text-sm leading-relaxed text-slate-600 dark:text-slate-300"></p>
-                </div>
-
-                <!-- Interactive Financial Calculator -->
-                <div class="bg-gradient-to-br from-slate-900 to-brand-950 text-white rounded-2xl p-6 space-y-6 shadow-xl">
-                    <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                        <h3 class="text-lg font-bold flex items-center gap-2">
-                            <i data-lucide="calculator" class="w-5 h-5 text-emerald-400"></i> Interactive Revenue & ROI Calculator
-                        </h3>
-                        <span class="text-xs text-slate-400">Real-time Simulation</span>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <!-- Sliders -->
-                        <div class="space-y-4 md:col-span-2">
-                            <!-- Customers -->
-                            <div>
-                                <div class="flex justify-between text-xs font-semibold mb-1">
-                                    <span>Est. Monthly Customers / Clients</span>
-                                    <span id="calc-cust-val" class="text-brand-400 font-bold">50</span>
-                                </div>
-                                <input type="range" id="calc-cust" min="5" max="500" value="50" oninput="updateCalculator()" class="w-full accent-brand-500 cursor-pointer">
-                            </div>
-
-                            <!-- Price -->
-                            <div>
-                                <div class="flex justify-between text-xs font-semibold mb-1">
-                                    <span>Average Price per Unit / Retainer ($)</span>
-                                    <span id="calc-price-val" class="text-brand-400 font-bold">$99</span>
-                                </div>
-                                <input type="range" id="calc-price" min="10" max="2000" value="99" step="5" oninput="updateCalculator()" class="w-full accent-brand-500 cursor-pointer">
-                            </div>
-
-                            <!-- Profit Margin -->
-                            <div>
-                                <div class="flex justify-between text-xs font-semibold mb-1">
-                                    <span>Estimated Profit Margin (%)</span>
-                                    <span id="calc-margin-val" class="text-brand-400 font-bold">75%</span>
-                                </div>
-                                <input type="range" id="calc-margin" min="10" max="95" value="75" oninput="updateCalculator()" class="w-full accent-brand-500 cursor-pointer">
-                            </div>
-                        </div>
-
-                        <!-- Results Card -->
-                        <div class="bg-slate-800/80 rounded-xl p-4 border border-slate-700 flex flex-col justify-between text-center">
-                            <div>
-                                <span class="text-xs uppercase text-slate-400 font-bold tracking-wider">Projected Monthly Revenue</span>
-                                <div id="calc-rev-out" class="text-2xl font-black text-white mt-1">$4,950</div>
-                            </div>
-                            <div class="my-2 border-t border-slate-700 pt-2">
-                                <span class="text-xs uppercase text-emerald-400 font-bold tracking-wider">Est. Annual Net Profit</span>
-                                <div id="calc-profit-out" class="text-3xl font-black text-emerald-400 mt-1">$44,550</div>
-                            </div>
-                            <span class="text-[10px] text-slate-400 italic">Based on active price & margin inputs</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SWOT Analysis Grid -->
-                <div class="space-y-3">
-                    <h3 class="text-lg font-bold flex items-center gap-2">
-                        <i data-lucide="shield-check" class="w-5 h-5 text-brand-500"></i> SWOT Analysis
-                    </h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/50">
-                            <span class="font-bold text-xs uppercase tracking-wider text-emerald-700 dark:text-emerald-400">Strengths</span>
-                            <p id="modal-swot-s" class="text-xs text-slate-600 dark:text-slate-300 mt-1"></p>
-                        </div>
-                        <div class="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/50">
-                            <span class="font-bold text-xs uppercase tracking-wider text-amber-700 dark:text-amber-400">Weaknesses</span>
-                            <p id="modal-swot-w" class="text-xs text-slate-600 dark:text-slate-300 mt-1"></p>
-                        </div>
-                        <div class="p-4 rounded-xl bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800/50">
-                            <span class="font-bold text-xs uppercase tracking-wider text-blue-700 dark:text-blue-400">Opportunities</span>
-                            <p id="modal-swot-o" class="text-xs text-slate-600 dark:text-slate-300 mt-1"></p>
-                        </div>
-                        <div class="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800/50">
-                            <span class="font-bold text-xs uppercase tracking-wider text-rose-700 dark:text-rose-400">Threats</span>
-                            <p id="modal-swot-t" class="text-xs text-slate-600 dark:text-slate-300 mt-1"></p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 30-Day Launch Roadmap -->
-                <div class="space-y-4">
-                    <h3 class="text-lg font-bold flex items-center gap-2">
-                        <i data-lucide="check-square" class="w-5 h-5 text-brand-600"></i> 30-Day Launch Action Plan
-                    </h3>
-                    <div id="modal-roadmap" class="space-y-3">
-                        <!-- Populated dynamically -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal Footer -->
-            <div class="sticky bottom-0 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 p-4 flex justify-between items-center rounded-b-3xl">
-                <button id="modal-save-btn" onclick="" class="px-5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-800 dark:text-slate-200 text-xs font-bold transition-all flex items-center gap-2">
-                    <i data-lucide="bookmark" class="w-4 h-4"></i> Save to Workspace
-                </button>
-                <button onclick="closeModal()" class="px-5 py-2.5 rounded-xl bg-brand-600 text-white font-bold text-xs hover:bg-brand-500 transition-all">
-                    Done
-                </button>
-            </div>
-        </div>
+  <!-- Hero Section -->
+  <main class="max-w-7xl mx-auto px-6 py-12 flex-grow w-full">
+    <div class="text-center max-w-3xl mx-auto mb-10">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold mb-6">
+        <i data-lucide="crown" class="w-4 h-4"></i>
+        <span>Exclusive Blueprint Engine for Diana’s Community</span>
+      </div>
+      <h1 class="text-4xl sm:text-6xl font-black text-white tracking-tight mb-4 leading-tight">
+        Turn Ambition Into <span class="gold-text">High-Profit Ventures</span>
+      </h1>
+      <p class="text-slate-400 text-base sm:text-lg">
+        Discover verified remote high-ticket business models, simulate ROI, build Lean Canvases, and access passive launch blueprints.
+      </p>
     </div>
 
-    <!-- Notification Toast Container -->
-    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border border-slate-700 transition-all transform translate-y-20 opacity-0 pointer-events-none text-xs font-semibold">
-        <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400"></i>
-        <span id="toast-msg">Notification message</span>
+    <!-- Monetization Banner (100% Passive VIP Vault) -->
+    <div class="max-w-4xl mx-auto mb-12 p-6 rounded-3xl bg-gradient-to-r from-amber-500/15 via-slate-900 to-amber-500/10 border border-amber-500/30 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
+      <div>
+        <span class="text-[10px] uppercase font-bold tracking-widest text-amber-400 bg-amber-500/20 px-2.5 py-1 rounded-full border border-amber-500/30 mb-2 inline-block">VIP Digital Access</span>
+        <h3 class="text-xl font-bold text-white mb-1">Get The VIP Founder Execution Vault ($27)</h3>
+        <p class="text-slate-400 text-xs">Instant download: Pitch templates, outreach scripts, and 50+ remote high-ticket blueprints.</p>
+      </div>
+      <a href="https://gumroad.com" target="_blank" class="px-6 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs rounded-xl transition shadow-lg shadow-amber-500/20 shrink-0 uppercase tracking-wider">
+        Unlock Vault ($27)
+      </a>
     </div>
 
-    <!-- Core Application Data & Logic -->
-    <script>
-        // Pre-loaded Database of 20+ Real-World Business Ideas
-        const businessIdeas = [
-            {
-                id: "idea-1",
-                title: "Micro-SaaS API Wrapper for AI Workflows",
-                tagline: "Simple API wrappers that format complex AI outputs into structured JSON for specific niches.",
-                category: "SaaS",
-                startupCostVal: 150,
-                startupCost: "$150 (Domain + Vercel/Supabase free tier)",
-                timeCommitment: "Side Hustle",
-                skillLevel: "Advanced",
-                targetAudience: "Indie hackers, web developers, marketing automation pros.",
-                monetization: "Tiered API subscription ($19/mo, $49/mo, $199/mo).",
-                calcDefaults: { cust: 40, price: 49, margin: 85 },
-                pitch: "Developers waste hours writing custom parsers for LLM outputs. A focused micro-SaaS API standardizes data structures for specific industries (e.g., real estate listing parsing, resume extraction) with guaranteed response schemas.",
-                swot: {
-                    s: "High gross margins (85%+), automated delivery, recurring revenue.",
-                    w: "Requires coding skills and ongoing API maintenance.",
-                    o: "Growing demand for structured AI data in corporate workflows.",
-                    t: "OpenAI or major providers launching native schema tooling."
-                },
-                roadmap: [
-                    { week: "Week 1", task: "Identify niche output format (e.g., real estate PDFs) and build prototype schema." },
-                    { week: "Week 2", task: "Deploy simple landing page with Stripe billing and API documentation." },
-                    { week: "Week 3", task: "Launch on ProductHunt, Twitter/X, and relevant developer Subreddits." },
-                    { week: "Week 4", task: "Gather initial subscriber feedback and optimize API latencies." }
-                ]
-            },
-            {
-                id: "idea-2",
-                title: "Niche Curation Newsletter & Paid Job Board",
-                tagline: "Curated weekly jobs and tools for specialized roles (e.g., Remote AI Engineers, Sustainability Designers).",
-                category: "Content/Media",
-                startupCostVal: 80,
-                startupCost: "$80 (Beehiiv/ConvertKit + Custom Domain)",
-                timeCommitment: "Side Hustle",
-                skillLevel: "Beginner",
-                targetAudience: "Specialized professionals seeking remote high-paying roles.",
-                monetization: "Featured job posts ($150/post) & Newsletter sponsorships.",
-                calcDefaults: { cust: 20, price: 150, margin: 90 },
-                pitch: "General job boards are too noisy. Build a highly focused, curated weekly newsletter targeting an emerging role. Earn from companies looking to hire talent directly.",
-                swot: {
-                    s: "Low overhead, easy to start, scalable content asset.",
-                    w: "Takes 2-3 months to build initial subscriber audience.",
-                    o: "Partner with niche influencer communities for quick list growth.",
-                    t: "Market fluctuations in hiring budgets."
-                },
-                roadmap: [
-                    { week: "Week 1", task: "Set up Beehiiv account, domain, and define target niche avatar." },
-                    { week: "Week 2", task: "Manually curate first 3 newsletter issues with top job listings." },
-                    { week: "Week 3", task: "Promote free subscription across LinkedIn & niche forums." },
-                    { week: "Week 4", task: "Reach out to 20 recruiters for paid job listings." }
-                ]
-            },
-            {
-                id: "idea-3",
-                title: "Local Business Google Maps Boost Agency",
-                tagline: "Optimization service helping local plumbers, dentists, and cafes rank higher on Google Local Pack.",
-                category: "Agency",
-                startupCostVal: 200,
-                startupCost: "$200 (Cold outreach tools + audit software)",
-                timeCommitment: "Full Time",
-                skillLevel: "Intermediate",
-                targetAudience: "Local service business owners lacking digital marketing expertise.",
-                monetization: "Monthly retainer ($500 - $1,500/month).",
-                calcDefaults: { cust: 12, price: 750, margin: 80 },
-                pitch: "Local businesses rely heavily on Google Maps for foot traffic and calls. Provide a complete profile setup, citation building, review automation, and local SEO optimizations.",
-                swot: {
-                    s: "High client retention, visible ROI for local business owners.",
-                    w: "Requires consistent cold outreach and phone calls.",
-                    o: "Bundle with simple AI web chat widgets for higher retainers.",
-                    t: "Local competition from existing marketing agencies."
-                },
-                roadmap: [
-                    { week: "Week 1", task: "Audit 50 local Google Business profiles in your city and build video audits." },
-                    { week: "Week 2", task: "Send personalized Loom video audits to business owners." },
-                    { week: "Week 3", task: "Close first 2 client retainers with a risk-free trial." },
-                    { week: "Week 4", task: "Implement review automation tools for clients." }
-                ]
-            },
-            {
-                id: "idea-4",
-                title: "Notion & Airtable Template Marketplace",
-                tagline: "Ready-to-use productivity dashboards and operational OS templates for freelancers and startups.",
-                category: "Digital Products",
-                startupCostVal: 30,
-                startupCost: "$30 (Gumroad / LemonSqueezy setup)",
-                timeCommitment: "Side Hustle",
-                skillLevel: "Beginner",
-                targetAudience: "Solopreneurs, agency owners, project managers.",
-                monetization: "One-time digital downloads ($29 - $99 each).",
-                calcDefaults: { cust: 120, price: 45, margin: 95 },
-                pitch: "Create beautifully designed systems that solve organizational chaos for small teams. Once built, digital products sell continuously with zero fulfillment cost.",
-                swot: {
-                    s: "Build once, sell infinitely; 95% net margins.",
-                    w: "Low entry barriers require distinct marketing.",
-                    o: "Bundle templates into a full 'Solopreneur OS' bundle.",
-                    t: "Saturated generic template marketplace."
-                },
-                roadmap: [
-                    { week: "Week 1", task: "Design comprehensive Notion dashboard for a specific buyer (e.g., Freelance Designers)." },
-                    { week: "Week 2", task: "Package Gumroad sales page with video preview walk-throughs." },
-                    { week: "Week 3", task: "Create TikTok/X/YouTube shorts showcasing the template setup." },
-                    { week: "Week 4", task: "Partner with productivity YouTubers for affiliate promotion." }
-                ]
-            },
-            {
-                id: "idea-5",
-                title: "Eco-Friendly Pet Product Dropshipping & Brand",
-                tagline: "Sourcing biodegradable, high-end sustainable pet toys, bowls, and accessories.",
-                category: "E-commerce",
-                startupCostVal: 1200,
-                startupCost: "$1,200 (Shopify, ad test budget, inventory samples)",
-                timeCommitment: "Full Time",
-                skillLevel: "Intermediate",
-                targetAudience: "Eco-conscious pet owners.",
-                monetization: "E-commerce store margins (3x markup).",
-                calcDefaults: { cust: 200, price: 42, margin: 40 },
-                pitch: "Pet owners spend passionately on high-quality items for their pets. Focus on non-toxic, eco-certified materials with strong visual branding.",
-                swot: {
-                    s: "Passionate demographic with high repeat order potential.",
-                    w: "Shipping costs and ad customer acquisition costs (CAC).",
-                    o: "Subscription box upsells for monthly eco-treats.",
-                    t: "Supply chain delays and rising ad costs."
-                },
-                roadmap: [
-                    { week: "Week 1", task: "Source 5 vetted eco-certified products from suppliers and order samples." },
-                    { week: "Week 2", task: "Build clean Shopify store with high-converting product pages." },
-                    { week: "Week 3", task: "Shoot user-generated video ads (UGC) with pets." },
-                    { week: "Week 4", task: "Launch targeted Meta & TikTok ad campaigns." }
-                ]
-            },
-            {
-                id: "idea-6",
-                title: "Mobile EV Charger & Detailing Service",
-                tagline: "On-demand mobile interior detailing and emergency fast-charging for Electric Vehicles.",
-                category: "Local Service",
-                startupCostVal: 3500,
-                startupCost: "$3,500 (Mobile generator/power station, cleaning kit)",
-                timeCommitment: "Full Time",
-                skillLevel: "Beginner",
-                targetAudience: "EV owners, Tesla drivers, suburban commuters.",
-                monetization: "Service packages ($120 - $300 per visit).",
-                calcDefaults: { cust: 30, price: 180, margin: 65 },
-                pitch: "EV adoption is skyrocketing, but dedicated mobile services are rare. Offer high-end eco-friendly waterless washing and battery top-ups directly in corporate parking lots.",
-                swot: {
-                    s: "High average order value, affluent customer base.",
-                    w: "Physical labor and equipment storage needed.",
-                    o: "Corporate office subscription contracts for employee fleets.",
-                    t: "Weather dependency and equipment wear."
-                },
-                roadmap: [
-                    { week: "Week 1", task: "Purchase portable power bank station and professional detailing supplies." },
-                    { week: "Week 2", task: "Create Google Profile, simple booking page, and local flyers." },
-                    { week: "Week 3", task: "Do 5 discounted services for neighbor reviews and before/after photos." },
-                    { week: "Week 4", task: "Pitch local tech office parks for weekly recurring detailing pop-ups." }
-                ]
-            },
-            {
-                id: "idea-7",
-                title: "Vertical B2B Cold Email Lead Gen Agency",
-                tagline: "Done-for-you outbound sales pipeline for B2B tech and consulting companies.",
-                category: "Agency",
-                startupCostVal: 400,
-                startupCost: "$400 (Secondary domains, Instantly/Smartlead)",
-                timeCommitment: "Full Time",
-                skillLevel: "Intermediate",
-                targetAudience: "B2B SaaS companies, agencies, corporate consultants.",
-                monetization: "Monthly base retainer ($1,500) + $150 per qualified call booked.",
-                calcDefaults: { cust: 6, price: 2200, margin: 70 },
-                pitch: "B2B firms struggle to keep sales pipelines full. Build specialized cold email infrastructure that guarantees booked sales meetings.",
-                swot: {
-                    s: "High ticket retainer contracts ($2,000+/month).",
-                    w: "Email deliverability requires strict technical setup.",
-                    o: "Integrate AI video personalization for higher response rates.",
-                    t: "Updating spam filter rules by major email providers."
-                },
-                roadmap: [
-                    { week: "Week 1", task: "Buy 5 secondary domains and warm up email accounts for 14 days." },
-                    { week: "Week 2", task: "Extract verified lead lists using Apollo.io for a target niche." },
-                    { week: "Week 3", task: "Write compelling personalized email copy and pitch prospective clients." },
-                    { week: "Week 4", task: "Onboard initial client and launch outbound campaign." }
-                ]
-            },
-            {
-                id: "idea-8",
-                title: "Micro-SaaS Feedback & Testimonial Widget",
-                tagline: "Embeddable widget for founders to collect video and text testimonials in 60 seconds.",
-                category: "SaaS",
-                startupCostVal: 300,
-                startupCost: "$300 (Cloud hosting & video storage APIs)",
-                timeCommitment: "Full Time",
-                skillLevel: "Advanced",
-                targetAudience: "E-commerce stores, course creators, SaaS founders.",
-                monetization: "Freemium plan, $29/mo Pro, $79/mo Business.",
-                calcDefaults: { cust: 75, price: 39, margin: 80 },
-                pitch: "Social proof converts buyers. Build a simple 1-code-line embed widget that allows customers to record video reviews directly from their phone.",
-                swot: {
-                    s: "Viral growth mechanism (powered by badge on free tier).",
-                    w: "Requires robust video transcoding infrastructure.",
-                    o: "Add automated review syndication to Google Reviews.",
-                    t: "Established competitors with heavy funding."
-                },
-                roadmap: [
-                    { week: "Week 1", task: "Build MVP widget recorder using WebRTC and AWS S3 storage." },
-                    { week: "Week 2", task: "Design clean dashboard for customers to approve and embed wall of love." },
-                    { week: "Week 3", task: "Launch free tier on Twitter/X indie hacker community." },
-                    { week: "Week 4", task: "Convert top 10% active free users to paid subscriptions." }
-                ]
-            },
-            {
-                id: "idea-9",
-                title: "3D Print-on-Demand Custom Desk Accessories",
-                tagline: "Unique minimalist cable organizers, headphone stands, and desk tools designed and printed locally.",
-                category: "Digital Products",
-                startupCostVal: 600,
-                startupCost: "$600 (3D printer + PLA filament stock)",
-                timeCommitment: "Side Hustle",
-                skillLevel: "Intermediate",
-                targetAudience: "Remote workers, tech enthusiasts, setup aesthetic creators.",
-                monetization: "Etsy and direct Shopify product sales ($25 - $75).",
-                calcDefaults: { cust: 90, price: 40, margin: 60 },
-                pitch: "Desk setup aesthetic is a huge social media trend. Design custom parametric desk organizers that look like luxury art and 3D print them on demand.",
-                swot: {
-                    s: "Very low unit cost ($2 material = $35 retail price).",
-                    w: "Print time limits daily fulfillment capacity initially.",
-                    o: "Scale into a multi-printer local print farm as sales increase.",
-                    t: "Copycat designs on major marketplaces."
-                },
-                roadmap: [
-                    { week: "Week 1", task: "Acquire 3D printer and CAD software to design initial 3 products." },
-                    { week: "Week 2", task: "Set up Etsy shop with high-resolution lifestyle photographs." },
-                    { week: "Week 3", task: "Send samples to desk setup Instagram & TikTok creators." },
-                    { week: "Week 4", task: "Fulfill first wave of organic orders and optimize print settings." }
-                ]
-            },
-            {
-                id: "idea-10",
-                title: "Custom AI Chatbot Integration for Clinics",
-                tagline: "HIPAA-compliant appointment booking and FAQ bot for dental & medical offices.",
-                category: "Agency",
-                startupCostVal: 250,
-                startupCost: "$250 (Bot platform sub + domain)",
-                timeCommitment: "Full Time",
-                skillLevel: "Intermediate",
-                targetAudience: "Private medical practices, dental clinics, wellness centers.",
-                monetization: "$1,500 setup fee + $299/mo maintenance.",
-                calcDefaults: { cust: 10, price: 450, margin: 85 },
-                pitch: "Medical staff waste hours answering repetitive phone calls about hours, insurance, and booking. Build pre-trained chatbots that automate patient intake.",
-                swot: {
-                    s: "High recurring retainers and low client churn.",
-                    w: "Requires strict data privacy and compliance awareness.",
-                    o: "Expand service to veterinary clinics and med-spas.",
-                    t: "Practice management software adding native bots."
-                },
-                roadmap: [
-                    { week: "Week 1", task: "Build clinic chatbot prototype using Botpress or Voiceflow." },
-                    { week: "Week 2", task: "Create demo landing page showing bot booking an appointment live." },
-                    { week: "Week 3", task: "In-person visits and cold email outreach to 30 local clinics." },
-                    { week: "Week 4", task: "Close first practice and install widget on their site." }
-                ]
-            },
-            {
-                id: "idea-11",
-                title: "Boutique Airbnb Property Management",
-                tagline: "Turnkey co-hosting and short-term rental optimization for property owners.",
-                category: "Local Service",
-                startupCostVal: 500,
-                startupCost: "$500 (Software tools, legal contracts, marketing)",
-                timeCommitment: "Full Time",
-                skillLevel: "Intermediate",
-                targetAudience: "Real estate investors, vacation home owners.",
-                monetization: "15% - 25% percentage of total booking revenue.",
-                calcDefaults: { cust: 5, price: 1200, margin: 70 },
-                pitch: "Homeowners want short-term rental yields without the middle-of-the-night guest calls. Manage dynamic pricing, cleaning staff, and guest communications.",
-                swot: {
-                    s: "Zero inventory required (manage other people's assets).",
-                    w: "24/7 guest emergency availability needed.",
-                    o: "Expand to dynamic revenue optimization consulting.",
-                    t: "Changing municipal short-term rental laws."
-                },
-                roadmap: [
-                    { week: "Week 1", task: "Draft co-hosting agreement contracts with a local legal template." },
-                    { week: "Week 2", task: "Build outreach list of local Airbnb hosts with ratings below 4.5 stars." },
-                    { week: "Week 3", task: "Offer property optimization proposal guaranteeing higher nightly rates." },
-                    { week: "Week 4", task: "Take over management for first listing and optimize dynamic pricing." }
-                ]
-            },
-            {
-                id: "idea-12",
-                title: "Substack Paid Industry Analysis Journal",
-                tagline: "Deep-dive technical breakdowns on niche markets (e.g., Space Tech, Biotech AI).",
-                category: "Content/Media",
-                startupCostVal: 0,
-                startupCost: "$0 (Free on Substack)",
-                timeCommitment: "Side Hustle",
-                skillLevel: "Intermediate",
-                targetAudience: "Venture capitalists, startup executives, industry researchers.",
-                monetization: "Monthly/annual subscriber paywall ($15/mo or $150/yr).",
-                calcDefaults: { cust: 250, price: 15, margin: 95 },
-                pitch: "Busy executives gladly pay for distilled, high-value industry intelligence that saves them hours of research time every week.",
-                swot: {
-                    s: "Zero upfront monetary investment required; high prestige.",
-                    w: "Requires consistent high-quality writing and research output.",
-                    o: "Expand into high-ticket private consulting calls.",
-                    t: "Free content alternatives on Twitter/X."
-                },
-                roadmap: [
-                    { week: "Week 1", task: "Select specific high-growth niche and publish first free mega-essay." },
-                    { week: "Week 2", task: "Promote research highlights on LinkedIn and Hacker News." },
-                    { week: "Week 3", task: "Publish issue #3 with a paywalled deep-dive section." },
-                    { week: "Week 4", task: "Convert free readers to paid subscribers with launch discount." }
-                ]
-            },
-            {
-                id: "idea-13",
-                title: "Curated Artisan Coffee Subscription Box",
-                tagline: "Delivering small-batch single-origin roasted beans from independent micro-roasters.",
-                category: "E-commerce",
-                startupCostVal: 1500,
-                startupCost: "$1,500 (Custom box design, initial bean inventory, website)",
-                timeCommitment: "Full Time",
-                skillLevel: "Beginner",
-                targetAudience: "Specialty coffee enthusiasts, home baristas.",
-                monetization: "Recurring monthly subscription ($28/mo).",
-                calcDefaults: { cust: 150, price: 28, margin: 45 },
-                pitch: "Coffee drinkers love discovering unique local roasters. Partner with roasters to ship fresh, curated beans straight to customers' doorsteps monthly.",
-                swot: {
-                    s: "High recurring revenue predictability and customer retention.",
-                    w: "Perishable product requires careful logistics planning.",
-                    o: "Add exclusive tasting notes and virtual coffee cupping events.",
-                    t: "Competition from major brand coffee subscriptions."
-                },
-                roadmap: [
-                    { week: "Week 1", task: "Partner with 3 local micro-roasters for wholesale bean pricing." },
-                    { week: "Week 2", task: "Build custom Shopify store using Subscriptions app." },
-                    { week: "Week 3", task: "Run Instagram giveaways and influencer unboxing collabs." },
-                    { week: "Week 4", task: "Pack and ship first month's cohort of box orders." }
-                ]
-            },
-            {
-                id: "idea-14",
-                title: "SaaS Onboarding UX Audit & Redesign",
-                tagline: "Fixing leaky conversion funnels for early-stage B2B software companies.",
-                category: "Agency",
-                startupCostVal: 100,
-                startupCost: "$100 (Figma + Screen recording software)",
-                timeCommitment: "Side Hustle",
-                skillLevel: "Advanced",
-                targetAudience: "Seed & Series A B2B software founders.",
-                monetization: "Fixed-price audit sprint ($1,200 - $3,000 per teardown).",
-                calcDefaults: { cust: 4, price: 1800, margin: 90 },
-                pitch: "High user acquisition drop-off kills SaaS growth. Deliver detailed UX tear-downs highlighting friction in trial-to-paid onboarding funnels.",
-                swot: {
-                    s: "High margin, fast delivery (1-week turnaround per client).",
-                    w: "Tied directly to personal design expertise.",
-                    o: "Upsell full product design implementation retainer.",
-                    t: "Founders using automated AI audit tools."
-                },
-                roadmap: [
-                    { week: "Week 1", task: "Create public breakdown teardowns of popular apps on Twitter/LinkedIn." },
-                    { week: "Week 2", task: "Offer 3 free mini-audits to SaaS founders for testimonials." },
-                    { week: "Week 3", task: "Package paid $1,200 Onboarding Sprint productized service." },
-                    { week: "Week 4", task: "Send cold video audits to founders with low signup conversion." }
-                ]
-            },
-            {
-                id: "idea-15",
-                title: "Micro-SaaS Invoicing Tool for Creators",
-                tagline: "Dead-simple invoice creation with built-in Stripe payment links and auto-reminders.",
-                category: "SaaS",
-                startupCostVal: 200,
-                startupCost: "$200 (Hosting + Domain + Stripe integration)",
-                timeCommitment: "Full Time",
-                skillLevel: "Advanced",
-                targetAudience: "Freelancers, influencers, creative consultants.",
-                monetization: "1% transaction fee or $9/mo unlimited subscription.",
-                calcDefaults: { cust: 200, price: 12, margin: 85 },
-                pitch: "Existing accounting software like QuickBooks is bloatware for simple freelancers. Build a minimalist invoicing tool that takes 10 seconds to generate a payment link.",
-                swot: {
-                    s: "Sticky product with low monthly subscriber churn.",
-                    w: "Requires robust security and payment gateway integration.",
-                    o: "Add expense tracking and simple tax export features.",
-                    t: "Established free invoice generator tools."
-                },
-                roadmap: [
-                    { week: "Week 1", task: "Build minimalist React invoice generator with PDF download capability." },
-                    { week: "Week 2", task: "Integrate Stripe Connect for instant online invoice payments." },
-                    { week: "Week 3", task: "Launch on ProductHunt and indie freelancer communities." },
-                    { week: "Week 4", task: "Add automated email reminder feature for unpaid invoices." }
-                ]
-            },
-            {
-                id: "idea-16",
-                title: "Custom Mechanical Keyboard Assembly",
-                tagline: "Hand-crafted custom lubed switches and personalized mechanical keyboards for enthusiasts.",
-                category: "Digital Products",
-                startupCostVal: 400,
-                startupCost: "$400 (Assembly tools, switch lubes, keycap sets)",
-                timeCommitment: "Side Hustle",
-                skillLevel: "Intermediate",
-                targetAudience: "Programmers, gamers, desk aesthetic creators.",
-                monetization: "Custom assembly fee ($150 - $400 per custom board).",
-                calcDefaults: { cust: 15, price: 250, margin: 50 },
-                pitch: "Mechanical keyboard enthusiasts pay premium prices for custom hand-built keyboards with modded sound dampening and custom switches.",
-                swot: {
-                    s: "Highly passionate enthusiast buyer community.",
-                    w: "Manual build labor limits daily volume scalability.",
-                    o: "Sell custom sound dampening mod kits and switch packs.",
-                    t: "Pre-built keyboard brands improving stock quality."
-                },
-                roadmap: [
-                    { week: "Week 1", task: "Build 2 showcase custom keyboards and film sound test videos." },
-                    { week: "Week 2", task: "Post ASMR typing sound tests on TikTok and YouTube Shorts." },
-                    { week: "Week 3", task: "Launch custom commission intake form on Shopify/Etsy." },
-                    { week: "Week 4", task: "Fulfill first batch of custom client commissions." }
-                ]
-            },
-            {
-                id: "idea-17",
-                title: "Local Senior Citizen Tech Support Service",
-                tagline: "Patient, in-person technology help and device setup for elderly residents.",
-                category: "Local Service",
-                startupCostVal: 100,
-                startupCost: "$100 (Business cards, local newspaper ad, website)",
-                timeCommitment: "Side Hustle",
-                skillLevel: "Beginner",
-                targetAudience: "Seniors, non-tech savvy adults, concerned family members.",
-                monetization: "Hourly rate ($60 - $90/hr) or monthly family peace-of-mind plan.",
-                calcDefaults: { cust: 25, price: 120, margin: 90 },
-                pitch: "Seniors frequently struggle with smart phones, Wi-Fi, and TV streaming. Offer friendly, patient on-site assistance and setup.",
-                swot: {
-                    s: "High trust barriers mean low direct local competition.",
-                    w: "Requires high patience and clear communication skills.",
-                    o: "Partner with senior living communities for group workshops.",
-                    t: "Relying on local word-of-mouth marketing."
-                },
-                roadmap: [
-                    { week: "Week 1", task: "Print friendly flyers and business cards with phone number." },
-                    { week: "Week 2", task: "Distribute flyers at community centers and senior centers." },
-                    { week: "Week 3", task: "Run hyper-local Nextdoor and Facebook posts offering tech help." },
-                    { week: "Week 4", task: "Secure initial 5 local senior clients for device troubleshooting." }
-                ]
-            },
-            {
-                id: "idea-18",
-                title: "Virtual Executive Assistant for Founders",
-                tagline: "High-end operational support, calendar management, and travel planning for busy CEOs.",
-                category: "Agency",
-                startupCostVal: 50,
-                startupCost: "$50 (Domain + Professional email)",
-                timeCommitment: "Full Time",
-                skillLevel: "Intermediate",
-                targetAudience: "Busy tech founders, venture partners, agency executives.",
-                monetization: "Monthly retainer ($1,000 - $3,000 / month per executive).",
-                calcDefaults: { cust: 4, price: 1500, margin: 85 },
-                pitch: "Founders waste 15+ hours a week on administrative busywork. Provide elite executive support to reclaim their calendar and focus.",
-                swot: {
-                    s: "High trust retainers, recurring long-term relationships.",
-                    w: "Requires high availability during business hours.",
-                    o: "Scale into a boutique virtual assistant agency with sub-contractors.",
-                    t: "AI calendar assistants automating simple scheduling."
-                },
-                roadmap: [
-                    { week: "Week 1", task: "Define service packages (calendar, inbox zero, flight logistics)." },
-                    { week: "Week 2", task: "Reach out to network and post offer on Twitter/LinkedIn." },
-                    { week: "Week 3", task: "Take on initial client with a 2-week trial period." },
-                    { week: "Week 4", task: "Systematize founder workflows using Notion and Slack." }
-                ]
-            },
-            {
-                id: "idea-19",
-                title: "Niche E-Commerce Store for Ergonomics",
-                tagline: "Specialized online retailer for ergonomic standing desks, posture chairs, and wrist rests.",
-                category: "E-commerce",
-                startupCostVal: 800,
-                startupCost: "$800 (Shopify, supplier inventory/dropship setup)",
-                timeCommitment: "Full Time",
-                skillLevel: "Intermediate",
-                targetAudience: "Remote workers suffering from back/neck pain.",
-                monetization: "Direct retail sales margin (35% - 50%).",
-                calcDefaults: { cust: 80, price: 120, margin: 40 },
-                pitch: "Remote work posture issues are widespread. Create an expert-curated store offering verified ergonomic products with posture guides.",
-                swot: {
-                    s: "Strong problem-solving value for health-conscious buyers.",
-                    w: "Shipping bulky items requires solid logistics partners.",
-                    o: "Offer corporate B2B wellness bundle packages.",
-                    t: "Generic Amazon competition."
-                },
-                roadmap: [
-                    { week: "Week 1", task: "Vet high-quality ergonomic suppliers with fast delivery times." },
-                    { week: "Week 2", task: "Launch Shopify store with physical therapist product recommendations." },
-                    { week: "Week 3", task: "Publish blog guides on posture ergonomics for SEO ranking." },
-                    { week: "Week 4", task: "Run targeted Google Shopping ads for posture relief keywords." }
-                ]
-            },
-            {
-                id: "idea-20",
-                title: "Micro-Community for Independent Creators",
-                tagline: "Private paid Circle/Skool community providing weekly accountability and masterminds.",
-                category: "Content/Media",
-                startupCostVal: 100,
-                startupCost: "$100 (Skool / Circle platform subscription)",
-                timeCommitment: "Side Hustle",
-                skillLevel: "Beginner",
-                targetAudience: "Digital creators, writers, video editors, solopreneurs.",
-                monetization: "Monthly community membership ($29 - $49/mo).",
-                calcDefaults: { cust: 60, price: 39, margin: 90 },
-                pitch: "Building solo is lonely. Create a curated mastermind group offering co-working sessions, feedback, and weekly goal tracking.",
-                swot: {
-                    s: "Highly predictable monthly recurring revenue.",
-                    w: "Requires active daily community moderation and energy.",
-                    o: "Host quarterly live virtual bootcamps for members.",
-                    t: "Free Discord and Reddit community alternatives."
-                },
-                roadmap: [
-                    { week: "Week 1", task: "Set up Circle or Skool community space with 4 core discussion channels." },
-                    { week: "Week 2", task: "Invite 10 beta members for free in exchange for activity and testimonials." },
-                    { week: "Week 3", task: "Host first weekly live video mastermind call." },
-                    { week: "Week 4", task: "Open public membership enrollment with a 50-member cap." }
-                ]
-            }
-        ];
-
-        // App State
-        let activeCategory = "All";
-        let savedIdeaIds = JSON.parse(localStorage.getItem("ideaSpark_saved") || "[]");
-        let canvasData = JSON.parse(localStorage.getItem("ideaSpark_canvases") || "{}");
-        let activeCanvasId = null;
-        let quizAnswers = { budget: null, time: null, skill: null, interests: [] };
-
-        window.addEventListener("DOMContentLoaded", () => {
-            initLucide();
-            renderCategoryChips();
-            applyFilters();
-            updateSavedBadge();
-
-            // Populate Quiz Interests
-            const categories = ["SaaS", "Content/Media", "Agency", "Digital Products", "E-commerce", "Local Service"];
-            const interestContainer = document.getElementById("quiz-interest-options");
-            if (interestContainer) {
-                interestContainer.innerHTML = categories.map(cat => `
-                    <button type="button" onclick="toggleQuizInterest('${cat}', this)" class="quiz-interest-btn px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 text-xs font-semibold hover:border-brand-500 transition-all">
-                        + ${cat}
-                    </button>
-                `).join("");
-            }
-        });
-
-        function initLucide() {
-            if (window.lucide) {
-                lucide.createIcons();
-            }
-        }
-
-        // Dark Mode Handler
-        function toggleDarkMode() {
-            document.documentElement.classList.toggle('dark');
-        }
-
-        // Tab Switcher Logic
-        function switchTab(tab) {
-            document.querySelectorAll("main > section").forEach(sec => sec.classList.add("hidden"));
-            document.getElementById(`view-${tab}`).classList.remove("hidden");
-
-            // Update Header Tab Styles
-            document.querySelectorAll(".tab-btn").forEach(btn => {
-                btn.className = "tab-btn px-4 py-2 text-sm font-medium rounded-lg transition-all flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white";
-            });
-            const activeNav = document.getElementById(`tab-${tab}`);
-            if (activeNav) {
-                activeNav.className = "tab-btn px-4 py-2 text-sm font-medium rounded-lg transition-all flex items-center gap-2 bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm";
-            }
-
-            if (tab === 'saved') {
-                renderSavedWorkspace();
-            }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function renderCategoryChips() {
-            const categories = ["All", "SaaS", "Content/Media", "Agency", "Digital Products", "E-commerce", "Local Service"];
-            const container = document.getElementById("category-chips");
-            container.innerHTML = categories.map(cat => `
-                <button onclick="selectCategory('${cat}')" class="chip-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${activeCategory === cat ? 'bg-brand-600 text-white shadow' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'}">
-                    ${cat}
-                </button>
-            `).join("");
-        }
-
-        function selectCategory(cat) {
-            activeCategory = cat;
-            renderCategoryChips();
-            applyFilters();
-        }
-
-        // Filter & Search Engine
-        function applyFilters() {
-            const searchVal = (document.getElementById("search-input").value || "").toLowerCase();
-            const budgetVal = document.getElementById("filter-budget").value;
-            const timeVal = document.getElementById("filter-time").value;
-            const skillVal = document.getElementById("filter-skill").value;
-            const sortVal = document.getElementById("filter-sort").value;
-
-            let filtered = businessIdeas.filter(idea => {
-                // Category Filter
-                if (activeCategory !== "All" && idea.category !== activeCategory) return false;
-
-                // Search Filter
-                if (searchVal) {
-                    const matchText = `${idea.title} ${idea.tagline} ${idea.category} ${idea.targetAudience} ${idea.pitch}`.toLowerCase();
-                    if (!matchText.includes(searchVal)) return false;
-                }
-
-                // Budget Filter
-                if (budgetVal === "low" && idea.startupCostVal >= 500) return false;
-                if (budgetVal === "medium" && (idea.startupCostVal < 500 || idea.startupCostVal > 5000)) return false;
-                if (budgetVal === "high" && idea.startupCostVal < 5000) return false;
-
-                // Time Filter
-                if (timeVal !== "all" && idea.timeCommitment !== timeVal) return false;
-
-                // Skill Filter
-                if (skillVal !== "all" && idea.skillLevel !== skillVal) return false;
-
-                return true;
-            });
-
-            // Sorting
-            if (sortVal === "cost-low") {
-                filtered.sort((a, b) => a.startupCostVal - b.startupCostVal);
-            } else if (sortVal === "cost-high") {
-                filtered.sort((a, b) => b.startupCostVal - a.startupCostVal);
-            }
-
-            document.getElementById("ideas-count").textContent = filtered.length;
-            renderIdeasGrid(filtered);
-        }
-
-        function resetFilters() {
-            document.getElementById("search-input").value = "";
-            document.getElementById("filter-budget").value = "all";
-            document.getElementById("filter-time").value = "all";
-            document.getElementById("filter-skill").value = "all";
-            document.getElementById("filter-sort").value = "popular";
-            activeCategory = "All";
-            renderCategoryChips();
-            applyFilters();
-        }
-
-        function renderIdeasGrid(ideas) {
-            const grid = document.getElementById("ideas-grid");
-            if (ideas.length === 0) {
-                grid.innerHTML = `
-                    <div class="col-span-full text-center py-12 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-3">
-                        <i data-lucide="search-x" class="w-10 h-10 text-slate-400 mx-auto"></i>
-                        <h3 class="font-bold text-base">No business ideas found</h3>
-                        <p class="text-xs text-slate-500">Try adjusting your filters or search keywords.</p>
-                        <button onclick="resetFilters()" class="text-xs font-bold text-brand-600 hover:underline">Reset Filters</button>
-                    </div>
-                `;
-                initLucide();
-                return;
-            }
-
-            grid.innerHTML = ideas.map(idea => {
-                const isSaved = savedIdeaIds.includes(idea.id);
-                return `
-                    <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 hover:border-brand-500/50 hover:shadow-xl transition-all flex flex-col justify-between group relative">
-                        <div class="space-y-4">
-                            <!-- Card Header Badge & Actions -->
-                            <div class="flex justify-between items-start gap-2">
-                                <span class="px-3 py-1 rounded-full text-xs font-bold bg-brand-50 dark:bg-brand-950/80 text-brand-600 dark:text-brand-300 border border-brand-200 dark:border-brand-800">
-                                    ${idea.category}
-                                </span>
-                                <button onclick="toggleSaveIdea('${idea.id}')" class="p-2 rounded-xl text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" title="${isSaved ? 'Unsave Idea' : 'Save Idea'}">
-                                    <i data-lucide="bookmark" class="w-5 h-5 ${isSaved ? 'fill-brand-600 text-brand-600 dark:fill-brand-400 dark:text-brand-400' : ''}"></i>
-                                </button>
-                            </div>
-
-                            <!-- Title & Description -->
-                            <div>
-                                <h3 class="text-lg font-bold group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors line-clamp-1">${idea.title}</h3>
-                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed line-clamp-2">${idea.tagline}</p>
-                            </div>
-
-                            <!-- Highlights Grid -->
-                            <div class="grid grid-cols-2 gap-2 pt-2 text-xs border-t border-slate-100 dark:border-slate-800/80">
-                                <div class="bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-xl">
-                                    <span class="text-[10px] text-slate-400 block font-semibold">STARTUP COST</span>
-                                    <span class="font-bold text-slate-700 dark:text-slate-200">${idea.startupCost.split(' ')[0]}</span>
-                                </div>
-                                <div class="bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-xl">
-                                    <span class="text-[10px] text-slate-400 block font-semibold">TIME COMMITMENT</span>
-                                    <span class="font-bold text-slate-700 dark:text-slate-200">${idea.timeCommitment}</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card Action Footer -->
-                        <div class="pt-5 mt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
-                            <span class="text-[11px] font-semibold text-slate-400 flex items-center gap-1">
-                                <i data-lucide="shield" class="w-3.5 h-3.5"></i> ${idea.skillLevel}
-                            </span>
-                            <button onclick="openIdeaModal('${idea.id}')" class="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs shadow-md transition-all flex items-center gap-1.5">
-                                Expand Details <i data-lucide="chevron-right" class="w-4 h-4"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-            }).join("");
-
-            initLucide();
-        }
-
-        function openIdeaModal(id) {
-            const idea = businessIdeas.find(item => item.id === id);
-            if (!idea) return;
-
-            document.getElementById("modal-category").textContent = idea.category;
-            document.getElementById("modal-title").textContent = idea.title;
-            document.getElementById("modal-tagline").textContent = idea.tagline;
-            document.getElementById("modal-cost-badge").textContent = idea.startupCost.split(' ')[0];
-            document.getElementById("modal-cost").textContent = idea.startupCost;
-            document.getElementById("modal-time").textContent = idea.timeCommitment;
-            document.getElementById("modal-audience").textContent = idea.targetAudience;
-            document.getElementById("modal-skill").textContent = idea.skillLevel;
-            document.getElementById("modal-pitch").textContent = idea.pitch;
-
-            // SWOT
-            document.getElementById("modal-swot-s").textContent = idea.swot.s;
-            document.getElementById("modal-swot-w").textContent = idea.swot.w;
-            document.getElementById("modal-swot-o").textContent = idea.swot.o;
-            document.getElementById("modal-swot-t").textContent = idea.swot.t;
-
-            // Calculator Defaults
-            document.getElementById("calc-cust").value = idea.calcDefaults.cust;
-            document.getElementById("calc-price").value = idea.calcDefaults.price;
-            document.getElementById("calc-margin").value = idea.calcDefaults.margin;
-            updateCalculator();
-
-            // Roadmap
-            const roadmapContainer = document.getElementById("modal-roadmap");
-            roadmapContainer.innerHTML = idea.roadmap.map((step, idx) => `
-                <div class="flex items-start gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700/60">
-                    <span class="w-6 h-6 rounded-full bg-brand-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">${idx+1}</span>
-                    <div>
-                        <span class="font-bold text-xs text-brand-600 dark:text-brand-400 block">${step.week}</span>
-                        <p class="text-xs text-slate-600 dark:text-slate-300">${step.task}</p>
-                    </div>
-                </div>
-            `).join("");
-
-            // Save Button setup
-            const saveBtn = document.getElementById("modal-save-btn");
-            const isSaved = savedIdeaIds.includes(idea.id);
-            saveBtn.innerHTML = `<i data-lucide="bookmark" class="w-4 h-4 ${isSaved ? 'fill-current' : ''}"></i> ${isSaved ? 'Saved in Workspace' : 'Save to Workspace'}`;
-            saveBtn.onclick = () => {
-                toggleSaveIdea(idea.id);
-                openIdeaModal(idea.id);
-            };
-
-            document.getElementById("idea-modal").classList.remove("hidden");
-            initLucide();
-        }
-
-        function closeModal() {
-            document.getElementById("idea-modal").classList.add("hidden");
-        }
-
-        // Financial Calculator Formula
-        function updateCalculator() {
-            const cust = parseInt(document.getElementById("calc-cust").value);
-            const price = parseInt(document.getElementById("calc-price").value);
-            const margin = parseInt(document.getElementById("calc-margin").value);
-
-            document.getElementById("calc-cust-val").textContent = cust;
-            document.getElementById("calc-price-val").textContent = `$${price}`;
-            document.getElementById("calc-margin-val").textContent = `${margin}%`;
-
-            const monthlyRevenue = cust * price;
-            const annualNetProfit = monthlyRevenue * 12 * (margin / 100);
-
-            document.getElementById("calc-rev-out").textContent = `$${monthlyRevenue.toLocaleString()}`;
-            document.getElementById("calc-profit-out").textContent = `$${Math.round(annualNetProfit).toLocaleString()}`;
-        }
-
-        // Surprise Me / Random Idea Generator
-        function triggerSurpriseIdea() {
-            const randomIdea = businessIdeas[Math.floor(Math.random() * businessIdeas.length)];
-            openIdeaModal(randomIdea.id);
-            showToast(`Surprise Blueprint: ${randomIdea.title}`);
-        }
-
-        // Save Idea Logic & LocalStorage
-        function toggleSaveIdea(id) {
-            if (savedIdeaIds.includes(id)) {
-                savedIdeaIds = savedIdeaIds.filter(i => i !== id);
-                showToast("Idea removed from Workspace");
-            } else {
-                savedIdeaIds.push(id);
-                showToast("Idea saved to Workspace!");
-            }
-            localStorage.setItem("ideaSpark_saved", JSON.stringify(savedIdeaIds));
-            updateSavedBadge();
-            applyFilters();
-
-            if (!document.getElementById("view-saved").classList.contains("hidden")) {
-                renderSavedWorkspace();
-            }
-        }
-
-        function updateSavedBadge() {
-            const badge = document.getElementById("saved-badge");
-            if (savedIdeaIds.length > 0) {
-                badge.textContent = savedIdeaIds.length;
-                badge.classList.remove("hidden");
-            } else {
-                badge.classList.add("hidden");
-            }
-        }
-
-        function renderSavedWorkspace() {
-            const savedList = document.getElementById("saved-list");
-            const emptyState = document.getElementById("saved-empty-state");
-            const workspaceContent = document.getElementById("saved-workspace-content");
-
-            const savedIdeas = businessIdeas.filter(i => savedIdeaIds.includes(i.id));
-
-            if (savedIdeas.length === 0) {
-                emptyState.classList.remove("hidden");
-                workspaceContent.classList.add("hidden");
-                return;
-            }
-
-            emptyState.classList.add("hidden");
-            workspaceContent.classList.remove("hidden");
-
-            savedList.innerHTML = savedIdeas.map(idea => {
-                const isActive = activeCanvasId === idea.id;
-                return `
-                    <div onclick="selectCanvasIdea('${idea.id}')" class="p-4 rounded-2xl border transition-all cursor-pointer ${isActive ? 'bg-brand-50/80 dark:bg-brand-950/50 border-brand-500 shadow-md' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-slate-300'}">
-                        <div class="flex justify-between items-start">
-                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-brand-100 dark:bg-brand-900 text-brand-700 dark:text-brand-300">${idea.category}</span>
-                            <button onclick="event.stopPropagation(); toggleSaveIdea('${idea.id}')" class="text-slate-400 hover:text-rose-500 p-1">
-                                <i data-lucide="trash-2" class="w-4 h-4"></i>
-                            </button>
-                        </div>
-                        <h4 class="font-bold text-sm mt-2">${idea.title}</h4>
-                        <p class="text-xs text-slate-500 line-clamp-1 mt-0.5">${idea.tagline}</p>
-                    </div>
-                `;
-            }).join("");
-
-            if (!activeCanvasId || !savedIdeaIds.includes(activeCanvasId)) {
-                selectCanvasIdea(savedIdeas[0].id);
-            } else {
-                loadCanvasData(activeCanvasId);
-            }
-
-            initLucide();
-        }
-
-        function selectCanvasIdea(id) {
-            activeCanvasId = id;
-            renderSavedWorkspace();
-        }
-
-        function loadCanvasData(id) {
-            const idea = businessIdeas.find(i => i.id === id);
-            if (!idea) return;
-
-            document.getElementById("canvas-title").textContent = idea.title;
-
-            const existing = canvasData[id] || {
-                problem: idea.swot.w,
-                solution: idea.pitch,
-                uvp: idea.tagline,
-                channels: "Organic Search, Twitter/X, Cold Outreach",
-                revenue: idea.monetization,
-                costs: idea.startupCost
-            };
-
-            document.getElementById("canvas-problem").value = existing.problem || "";
-            document.getElementById("canvas-solution").value = existing.solution || "";
-            document.getElementById("canvas-uvp").value = existing.uvp || "";
-            document.getElementById("canvas-channels").value = existing.channels || "";
-            document.getElementById("canvas-revenue").value = existing.revenue || "";
-            document.getElementById("canvas-costs").value = existing.costs || "";
-        }
-
-        function saveCanvasNotes() {
-            if (!activeCanvasId) return;
-
-            canvasData[activeCanvasId] = {
-                problem: document.getElementById("canvas-problem").value,
-                solution: document.getElementById("canvas-solution").value,
-                uvp: document.getElementById("canvas-uvp").value,
-                channels: document.getElementById("canvas-channels").value,
-                revenue: document.getElementById("canvas-revenue").value,
-                costs: document.getElementById("canvas-costs").value
-            };
-
-            localStorage.setItem("ideaSpark_canvases", JSON.stringify(canvasData));
-            showToast("Lean Canvas saved successfully!");
-        }
-
-        // Export Functionality
-        function exportSavedIdeas(type) {
-            const savedIdeas = businessIdeas.filter(i => savedIdeaIds.includes(i.id));
-            if (savedIdeas.length === 0) {
-                showToast("No saved ideas to export!");
-                return;
-            }
-
-            let fileContent = "";
-            let fileName = `IdeaSpark_Workspace_${new Date().toISOString().slice(0, 10)}`;
-
-            if (type === 'json') {
-                const exportPayload = savedIdeas.map(idea => ({
-                    ...idea,
-                    leanCanvas: canvasData[idea.id] || null
-                }));
-                fileContent = JSON.stringify(exportPayload, null, 2);
-                fileName += ".json";
-            } else {
-                fileContent = savedIdeas.map((idea, idx) => {
-                    const canvas = canvasData[idea.id] || {};
-                    return `
-==================================================
-#${idx + 1}: ${idea.title}
-Category: ${idea.category} | Startup Cost: ${idea.startupCost}
-Tagline: ${idea.tagline}
-Pitch: ${idea.pitch}
-Target Audience: ${idea.targetAudience}
-
-[LEAN CANVAS SUMMARY]
-- Problem: ${canvas.problem || 'N/A'}
-- Solution: ${canvas.solution || 'N/A'}
-- UVP: ${canvas.uvp || 'N/A'}
-- Channels: ${canvas.channels || 'N/A'}
-- Revenue: ${canvas.revenue || 'N/A'}
-- Costs: ${canvas.costs || 'N/A'}
-==================================================
-                    `.trim();
-                }).join("\n\n");
-                fileName += ".txt";
-            }
-
-            const blob = new Blob([fileContent], { type: 'text/plain;charset=utf-8' });
-            const link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = fileName;
-            link.click();
-            showToast(`Exported ${savedIdeas.length} ideas to ${type.toUpperCase()}`);
-        }
-
-        function selectQuizOption(category, val, btnElem) {
-            quizAnswers[category] = val;
-            const parent = btnElem.parentElement;
-            parent.querySelectorAll(".quiz-btn").forEach(btn => {
-                btn.classList.remove("border-brand-600", "bg-brand-50/50", "dark:bg-brand-950/40");
-            });
-            btnElem.classList.add("border-brand-600", "bg-brand-50/50", "dark:bg-brand-950/40");
-        }
-
-        function toggleQuizInterest(interest, btnElem) {
-            if (quizAnswers.interests.includes(interest)) {
-                quizAnswers.interests = quizAnswers.interests.filter(i => i !== interest);
-                btnElem.classList.remove("bg-brand-600", "text-white");
-            } else {
-                quizAnswers.interests.push(interest);
-                btnElem.classList.add("bg-brand-600", "text-white");
-            }
-        }
-
-        function calculateQuizMatches() {
-            if (!quizAnswers.budget || !quizAnswers.time || !quizAnswers.skill) {
-                showToast("Please answer questions 1, 2, and 3!");
-                return;
-            }
-
-            // Score calculation algorithm
-            const scoredIdeas = businessIdeas.map(idea => {
-                let score = 50; // base score
-
-                // Budget match
-                if (quizAnswers.budget === 'low' && idea.startupCostVal < 500) score += 20;
-                else if (quizAnswers.budget === 'medium' && idea.startupCostVal >= 500 && idea.startupCostVal <= 5000) score += 20;
-                else if (quizAnswers.budget === 'high' && idea.startupCostVal > 5000) score += 20;
-
-                // Time commitment match
-                if (quizAnswers.time === idea.timeCommitment) score += 15;
-
-                // Skill level match
-                if (quizAnswers.skill === idea.skillLevel) score += 15;
-
-                // Category Interest match
-                if (quizAnswers.interests.includes(idea.category)) score += 20;
-
-                return { ...idea, matchScore: Math.min(score, 98) };
-            });
-
-            // Sort top 3
-            scoredIdeas.sort((a, b) => b.matchScore - a.matchScore);
-            const top3 = scoredIdeas.slice(0, 3);
-
-            const resultsContainer = document.getElementById("quiz-results");
-            const cardsContainer = document.getElementById("quiz-results-cards");
-
-            cardsContainer.innerHTML = top3.map((idea, idx) => `
-                <div class="p-5 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shadow-sm">
-                    <div class="space-y-1">
-                        <div class="flex items-center gap-2">
-                            <span class="px-2.5 py-0.5 rounded-full text-xs font-black bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
-                                ${idea.matchScore}% Match
-                            </span>
-                            <span class="text-xs font-bold text-slate-400">#${idx+1} Recommendation</span>
-                        </div>
-                        <h4 class="font-bold text-base">${idea.title}</h4>
-                        <p class="text-xs text-slate-500">${idea.tagline}</p>
-                    </div>
-                    <button onclick="openIdeaModal('${idea.id}')" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs rounded-xl shadow transition-all shrink-0">
-                        View Blueprint
-                    </button>
-                </div>
-            `).join("");
-
-            resultsContainer.classList.remove("hidden");
-            resultsContainer.scrollIntoView({ behavior: 'smooth' });
-            initLucide();
-        }
-
-        // Toast Notification System
-        function showToast(msg) {
-            const toast = document.getElementById("toast");
-            document.getElementById("toast-msg").textContent = msg;
-            toast.classList.remove("translate-y-20", "opacity-0", "pointer-events-none");
-            setTimeout(() => {
-                toast.classList.add("translate-y-20", "opacity-0", "pointer-events-none");
-            }, 3000);
-        }
-    </script>
+    <!-- Navigation Tabs -->
+    <div class="flex justify-center border-b border-slate-800 mb-8 overflow-x-auto">
+      <button onclick="switchTab('explorer')" id="tab-explorer" class="px-6 py-3 font-semibold text-sm text-amber-400 border-b-2 border-amber-500 flex items-center gap-2">
+        <i data-lucide="compass" class="w-4 h-4"></i> Idea Explorer
+      </button>
+      <button onclick="switchTab('roi')" id="tab-roi" class="px-6 py-3 font-semibold text-sm text-slate-400 border-b-2 border-transparent hover:text-slate-200 flex items-center gap-2">
+        <i data-lucide="calculator" class="w-4 h-4"></i> ROI Calculator
+      </button>
+      <button onclick="switchTab('canvas')" id="tab-canvas" class="px-6 py-3 font-semibold text-sm text-slate-400 border-b-2 border-transparent hover:text-slate-200 flex items-center gap-2">
+        <i data-lucide="layout" class="w-4 h-4"></i> Lean Canvas
+      </button>
+      <button onclick="switchTab('saved')" id="tab-saved" class="px-6 py-3 font-semibold text-sm text-slate-400 border-b-2 border-transparent hover:text-slate-200 flex items-center gap-2">
+        <i data-lucide="bookmark" class="w-4 h-4"></i> Saved Bookmarks (<span id="saved-count">0</span>)
+      </button>
+    </div>
+
+    <!-- Section 1: Idea Explorer -->
+    <section id="sec-explorer" class="space-y-6">
+      <div class="flex flex-col sm:flex-row gap-4 justify-between items-center bg-slate-900/50 p-4 rounded-2xl border border-slate-800">
+        <input type="text" id="search-input" onkeyup="filterIdeas()" placeholder="Search blueprints or skills..." class="bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-amber-500 w-full sm:w-80">
+        <div class="flex gap-2 w-full sm:w-auto">
+          <select id="category-filter" onchange="filterIdeas()" class="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-amber-500">
+            <option value="all">All Categories</option>
+            <option value="high-ticket">Remote High-Ticket</option>
+            <option value="digital">Digital Assets</option>
+            <option value="agency">High-Ticket Agency</option>
+            <option value="creator">Creator Economy</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="ideas-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Dynamic Cards -->
+      </div>
+    </section>
+
+    <!-- Section 2: ROI Calculator -->
+    <section id="sec-roi" class="hidden max-w-2xl mx-auto bg-slate-900/80 border border-slate-800 p-8 rounded-3xl">
+      <h2 class="text-2xl font-bold text-white mb-2 flex items-center gap-2">
+        <i data-lucide="calculator" class="text-amber-400"></i> Business ROI Simulator
+      </h2>
+      <p class="text-slate-400 text-sm mb-6">Estimate potential monthly and annual revenue based on client pricing and volume.</p>
+      
+      <div class="space-y-6">
+        <div>
+          <label class="block text-xs font-semibold uppercase text-slate-400 mb-2">Average Price Per Client / Package ($)</label>
+          <input type="number" id="roi-price" value="2500" oninput="calculateROI()" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:outline-none focus:border-amber-500">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase text-slate-400 mb-2">Clients / Sales Per Month</label>
+          <input type="number" id="roi-clients" value="4" oninput="calculateROI()" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:outline-none focus:border-amber-500">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase text-slate-400 mb-2">Estimated Monthly Operating Cost ($)</label>
+          <input type="number" id="roi-costs" value="150" oninput="calculateROI()" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white focus:outline-none focus:border-amber-500">
+        </div>
+
+        <div class="p-6 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-center">
+          <p class="text-xs uppercase font-bold text-amber-400 mb-1">Projected Monthly Profit</p>
+          <p id="roi-monthly" class="text-3xl font-black text-white mb-2">$9,850</p>
+          <p class="text-xs text-slate-400">Annual Profit Potential: <span id="roi-annual" class="text-amber-400 font-bold">$118,200</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Lean Canvas -->
+    <section id="sec-canvas" class="hidden bg-slate-900/80 border border-slate-800 p-8 rounded-3xl">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h2 class="text-2xl font-bold text-white">Interactive Lean Canvas</h2>
+          <p class="text-slate-400 text-sm">Map out your 1-page business plan directly in your browser.</p>
+        </div>
+        <button onclick="saveCanvas()" class="px-4 py-2 bg-amber-500 text-slate-950 font-bold rounded-xl text-xs hover:bg-amber-400">Save Canvas</button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <textarea id="canvas-problem" placeholder="Problem (Top 3 problems you solve)" class="bg-slate-950 border border-slate-800 p-4 rounded-xl text-sm text-white focus:border-amber-500 h-32 focus:outline-none"></textarea>
+        <textarea id="canvas-solution" placeholder="Solution (Top 3 features/services)" class="bg-slate-950 border border-slate-800 p-4 rounded-xl text-sm text-white focus:border-amber-500 h-32 focus:outline-none"></textarea>
+        <textarea id="canvas-uvp" placeholder="Unique Value Proposition (Single clear message)" class="bg-slate-950 border border-slate-800 p-4 rounded-xl text-sm text-white focus:border-amber-500 h-32 focus:outline-none"></textarea>
+        <textarea id="canvas-channels" placeholder="Channels (Pathways to customers)" class="bg-slate-950 border border-slate-800 p-4 rounded-xl text-sm text-white focus:border-amber-500 h-32 focus:outline-none"></textarea>
+        <textarea id="canvas-revenue" placeholder="Revenue Streams (Pricing model & lifetime value)" class="bg-slate-950 border border-slate-800 p-4 rounded-xl text-sm text-white focus:border-amber-500 h-32 focus:outline-none"></textarea>
+        <textarea id="canvas-costs" placeholder="Cost Structure (Fixed & variable expenses)" class="bg-slate-950 border border-slate-800 p-4 rounded-xl text-sm text-white focus:border-amber-500 h-32 focus:outline-none"></textarea>
+      </div>
+    </section>
+
+    <!-- Section 4: Saved Bookmarks -->
+    <section id="sec-saved" class="hidden">
+      <div id="saved-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Saved dynamically -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Detail Modal -->
+  <div id="idea-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden z-50 flex items-center justify-center p-6">
+    <div class="bg-slate-900 border border-slate-800 max-w-2xl w-full rounded-3xl p-6 sm:p-8 overflow-y-auto max-h-[90vh]">
+      <div class="flex justify-between items-start mb-4">
+        <div>
+          <span id="modal-category" class="text-xs uppercase tracking-widest text-amber-400 font-bold">Category</span>
+          <h2 id="modal-title" class="text-2xl font-bold text-white">Title</h2>
+        </div>
+        <button onclick="closeModal()" class="p-2 text-slate-400 hover:text-white"><i data-lucide="x"></i></button>
+      </div>
+      <p id="modal-desc" class="text-slate-300 text-sm mb-6">Description</p>
+      
+      <!-- SWOT Section -->
+      <div class="mb-6">
+        <h3 class="font-bold text-white text-sm uppercase tracking-wider mb-2 flex items-center gap-2"><i data-lucide="shield" class="text-amber-400"></i> SWOT Analysis</h3>
+        <div id="modal-swot" class="grid grid-cols-2 gap-3 text-xs"></div>
+      </div>
+
+      <!-- Roadmap Section -->
+      <div class="mb-6">
+        <h3 class="font-bold text-white text-sm uppercase tracking-wider mb-2 flex items-center gap-2"><i data-lucide="calendar" class="text-amber-400"></i> 30-Day Launch Steps</h3>
+        <ul id="modal-steps" class="space-y-2 text-xs text-slate-300 list-disc list-inside"></ul>
+      </div>
+
+      <!-- Passive Digital Download CTA -->
+      <div class="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <h4 class="text-xs font-bold text-white">Download Complete Execution Toolkit</h4>
+          <p class="text-[11px] text-slate-400">Includes contract templates, digital assets, and outreach scripts.</p>
+        </div>
+        <a href="https://gumroad.com" target="_blank" class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold rounded-xl transition shrink-0">
+          Get Kit ($19)
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800 bg-slate-950 py-8 px-6">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+      <p>© 2026 DIVITIAE HUB. Curated by Diana for the @billionairestogether community.</p>
+      <div class="flex items-center gap-4">
+        <a href="https://instagram.com/billionairestogether" target="_blank" class="hover:text-amber-400 transition flex items-center gap-1">
+          <i data-lucide="instagram" class="w-3.5 h-3.5"></i> @billionairestogether
+        </a>
+        <span>•</span>
+        <span class="text-slate-400">Powered by IdeaSpark</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const ideasData = [
+      {
+        id: 1,
+        title: "Remote High-Ticket Advisory",
+        category: "high-ticket",
+        cost: "$0 - $50",
+        revenue: "$5,000 - $15,000/mo",
+        desc: "Package advisory frameworks and high-level strategy blueprints for luxury brands and high-net-worth founders.",
+        swot: { S: "High profit margins (90%+)", W: "Requires niche positioning", O: "Global remote client base", T: "Initial authority build" },
+        steps: ["Day 1-7: Define luxury advisory tier", "Day 8-14: Package digital proposal decks", "Day 15-30: Outreach to 30 target founders"]
+      },
+      {
+        id: 2,
+        title: "High-Ticket Sales Operations Engine",
+        category: "high-ticket",
+        cost: "$0",
+        revenue: "$4,000 - $10,000/mo",
+        desc: "Build asynchronous sales funnels and automated qualification forms for creators selling $3,000+ packages.",
+        swot: { S: "High retainer value", W: "Technical setup", O: "Scaling high-ticket creators", T: "Lead quality drops" },
+        steps: ["Day 1-7: Map high-ticket intake funnel", "Day 8-14: Audit target creator intake flows", "Day 15-30: Pitch strategy implementation"]
+      },
+      {
+        id: 3,
+        title: "Luxury Brand Architecture Agency",
+        category: "high-ticket",
+        cost: "$100",
+        revenue: "$8,000 - $20,000/mo",
+        desc: "Transform boutique online businesses into ultra-premium brands through aesthetic brand bibles and story strategy.",
+        swot: { S: "Ultra-high perceived value", W: "Needs aesthetic focus", O: "E-commerce expansion", T: "Market shifts" },
+        steps: ["Day 1-7: Create flagship luxury brand guide", "Day 8-14: Audit 15 target brand websites", "Day 15-30: Close initial retainer clients"]
+      },
+      {
+        id: 4,
+        title: "High-Ticket Affiliate Referral System",
+        category: "high-ticket",
+        cost: "$0",
+        revenue: "$3,000 - $12,000/mo",
+        desc: "Refer verified high-ticket clients to premium agencies, legal firms, or software suites for 10-20% recurring commissions.",
+        swot: { S: "100% passive referral income", W: "Requires trusted network", O: "Scalable partnership deals", T: "Partner churn" },
+        steps: ["Day 1-7: Apply to top high-ticket affiliate programs", "Day 8-14: Build resource recommendation page", "Day 15-30: Drive targeted traffic via content"]
+      },
+      {
+        id: 5,
+        title: "AI Brand & Automation Studio",
+        category: "agency",
+        cost: "$50",
+        revenue: "$3,000/mo",
+        desc: "Automate social media content creation, branding assets, and scheduling for creators using AI production pipelines.",
+        swot: { S: "High demand", W: "Client retention", O: "Scalable agency model", T: "Tool updates" },
+        steps: ["Day 1-7: Pick target creator niche", "Day 8-14: Package offer into 3 tiers", "Day 15-30: Direct outreach to 50 creators"]
+      },
+      {
+        id: 6,
+        title: "Digital Template & Vault Studio",
+        category: "digital",
+        cost: "$20",
+        revenue: "$1,500 - $5,000/mo",
+        desc: "Build and sell high-aesthetic Canva templates, Notion dashboards, and founder planning vaults for automated income.",
+        swot: { S: "100% passive margins", W: "Initial template design", O: "Viral social distribution", T: "Copycats" },
+        steps: ["Day 1-7: Identify top-selling digital kits", "Day 8-14: Build 3 flagship digital vaults", "Day 15-30: Launch via link-in-bio"]
+      }
+    ];
+
+    let savedIds = JSON.parse(localStorage.getItem('divitiae_saved') || '[]');
+
+    function renderIdeas(data = ideasData) {
+      const grid = document.getElementById('ideas-grid');
+      grid.innerHTML = data.map(idea => `
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between hover:border-amber-500/40 transition">
+          <div>
+            <div class="flex justify-between items-start mb-3">
+              <span class="text-[10px] uppercase font-bold tracking-widest text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-full">${idea.category}</span>
+              <button onclick="toggleSave(${idea.id})" class="text-slate-400 hover:text-amber-400">
+                <i data-lucide="bookmark" class="w-4 h-4 ${savedIds.includes(idea.id) ? 'fill-amber-400 text-amber-400' : ''}"></i>
+              </button>
+            </div>
+            <h3 class="font-bold text-lg text-white mb-2">${idea.title}</h3>
+            <p class="text-slate-400 text-xs mb-4 line-clamp-2">${idea.desc}</p>
+            <div class="flex justify-between text-xs text-slate-300 font-semibold mb-6 bg-slate-950 p-3 rounded-xl border border-slate-800/80">
+              <span>Cost: <strong class="text-amber-400">${idea.cost}</strong></span>
+              <span>Potential: <strong class="text-amber-400">${idea.revenue}</strong></span>
+            </div>
+          </div>
+          <button onclick="openModal(${idea.id})" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-1">
+            View Full Blueprint <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      `).join('');
+      lucide.createIcons();
+      updateSavedCount();
+    }
+
+    function switchTab(tab) {
+      ['explorer', 'roi', 'canvas', 'saved'].forEach(t => {
+        document.getElementById(`sec-${t}`).classList.add('hidden');
+        document.getElementById(`tab-${t}`).className = 'px-6 py-3 font-semibold text-sm text-slate-400 border-b-2 border-transparent hover:text-slate-200 flex items-center gap-2';
+      });
+      document.getElementById(`sec-${tab}`).classList.remove('hidden');
+      document.getElementById(`tab-${tab}`).className = 'px-6 py-3 font-semibold text-sm text-amber-400 border-b-2 border-amber-500 flex items-center gap-2';
+      if (tab === 'saved') renderSaved();
+    }
+
+    function openModal(id) {
+      const idea = ideasData.find(i => i.id === id);
+      document.getElementById('modal-title').innerText = idea.title;
+      document.getElementById('modal-category').innerText = idea.category;
+      document.getElementById('modal-desc').innerText = idea.desc;
+      document.getElementById('modal-swot').innerHTML = `
+        <div class="p-2 bg-slate-950 rounded-lg"><strong class="text-emerald-400">S:</strong> ${idea.swot.S}</div>
+        <div class="p-2 bg-slate-950 rounded-lg"><strong class="text-rose-400">W:</strong> ${idea.swot.W}</div>
+        <div class="p-2 bg-slate-950 rounded-lg"><strong class="text-amber-400">O:</strong> ${idea.swot.O}</div>
+        <div class="p-2 bg-slate-950 rounded-lg"><strong class="text-sky-400">T:</strong> ${idea.swot.T}</div>
+      `;
+      document.getElementById('modal-steps').innerHTML = idea.steps.map(s => `<li>${s}</li>`).join('');
+      document.getElementById('idea-modal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('idea-modal').classList.add('hidden');
+    }
+
+    function toggleSave(id) {
+      if (savedIds.includes(id)) {
+        savedIds = savedIds.filter(i => i !== id);
+      } else {
+        savedIds.push(id);
+      }
+      localStorage.setItem('divitiae_saved', JSON.stringify(savedIds));
+      renderIdeas();
+    }
+
+    function updateSavedCount() {
+      document.getElementById('saved-count').innerText = savedIds.length;
+    }
+
+    function renderSaved() {
+      const savedIdeas = ideasData.filter(i => savedIds.includes(i.id));
+      const grid = document.getElementById('saved-grid');
+      if (!savedIdeas.length) {
+        grid.innerHTML = `<p class="text-slate-500 text-sm col-span-full text-center py-12">No saved ideas yet. Bookmark blueprints from the Explorer!</p>`;
+        return;
+      }
+      grid.innerHTML = savedIdeas.map(idea => `
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+          <h3 class="font-bold text-lg text-white mb-2">${idea.title}</h3>
+          <p class="text-slate-400 text-xs mb-4">${idea.desc}</p>
+          <button onclick="toggleSave(${idea.id}); renderSaved();" class="text-xs text-rose-400 font-bold hover:underline">Remove</button>
+        </div>
+      `).join('');
+    }
+
+    function calculateROI() {
+      const price = parseFloat(document.getElementById('roi-price').value) || 0;
+      const clients = parseFloat(document.getElementById('roi-clients').value) || 0;
+      const costs = parseFloat(document.getElementById('roi-costs').value) || 0;
+
+      const monthlyProfit = (price * clients) - costs;
+      const annualProfit = monthlyProfit * 12;
+
+      document.getElementById('roi-monthly').innerText = `$${monthlyProfit.toLocaleString()}`;
+      document.getElementById('roi-annual').innerText = `$${annualProfit.toLocaleString()}`;
+    }
+
+    function filterIdeas() {
+      const search = document.getElementById('search-input').value.toLowerCase();
+      const cat = document.getElementById('category-filter').value;
+
+      const filtered = ideasData.filter(i => {
+        const matchesSearch = i.title.toLowerCase().includes(search) || i.desc.toLowerCase().includes(search);
+        const matchesCat = cat === 'all' || i.category === cat;
+        return matchesSearch && matchesCat;
+      });
+
+      renderIdeas(filtered);
+    }
+
+    function saveCanvas() {
+      const canvasData = {
+        problem: document.getElementById('canvas-problem').value,
+        solution: document.getElementById('canvas-solution').value,
+        uvp: document.getElementById('canvas-uvp').value,
+        channels: document.getElementById('canvas-channels').value,
+        revenue: document.getElementById('canvas-revenue').value,
+        costs: document.getElementById('canvas-costs').value,
+      };
+      localStorage.setItem('divitiae_canvas', JSON.stringify(canvasData));
+      alert('Lean Canvas saved successfully!');
+    }
+
+    // Initialize
+    window.onload = () => {
+      renderIdeas();
+      lucide.createIcons();
+      const savedCanvas = JSON.parse(localStorage.getItem('divitiae_canvas') || '{}');
+      if (savedCanvas.problem) document.getElementById('canvas-problem').value = savedCanvas.problem;
+      if (savedCanvas.solution) document.getElementById('canvas-solution').value = savedCanvas.solution;
+      if (savedCanvas.uvp) document.getElementById('canvas-uvp').value = savedCanvas.uvp;
+      if (savedCanvas.channels) document.getElementById('canvas-channels').value = savedCanvas.channels;
+      if (savedCanvas.revenue) document.getElementById('canvas-revenue').value = savedCanvas.revenue;
+      if (savedCanvas.costs) document.getElementById('canvas-costs').value = savedCanvas.costs;
+    };
+  </script>
 </body>
 </html>
